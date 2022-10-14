@@ -1,10 +1,7 @@
 <h2>
     HANDOUT API
 </h2>
-Menu:&nbsp;&nbsp;
-[About](#ℹ%EF%B8%8F-about) |
-[Packages](#-packages) |
-[Getting started](#-getting-started)  
+
 
 ## ℹ️ About
 
