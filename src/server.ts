@@ -1,6 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import database from "./database";
+import database from "./config/database";
 
 const app:Application = express();
 const port:number | string = process.env.PORT || 3000;
@@ -19,3 +19,5 @@ app.get("*", (req: Request, res: Response) => {
 app.listen(port, () => {
     return console.log(`Express is listening at http://localhost:${port}`);
 });
+
+export default app
