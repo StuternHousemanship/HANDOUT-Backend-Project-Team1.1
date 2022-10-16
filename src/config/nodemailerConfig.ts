@@ -5,13 +5,6 @@ dotenv.config();
 
 const NODEMAILER_EMAIL = String(process.env.NODEMAILER_EMAIL);
 const NODEMAILER_PASS = String(process.env.NODEMAILER_PASS);
-console.log(NODEMAILER_EMAIL, NODEMAILER_PASS)
-
-type emailDetails = {
-    name: string;
-    email: string;
-    verificationCode: string;
-};
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
