@@ -1,6 +1,7 @@
 import { Application } from "express";
-import { createUser } from "../controllers/userController";
+import { createUser, verifyUserEmail } from "../controllers/userController";
 
 export const userRoute = (app: Application) => {
-  app.post("/user", createUser);
+  app.post("/auth/signup", createUser);
+  app.get("/auth/confirm/:verificationCode", verifyUserEmail);
 };
