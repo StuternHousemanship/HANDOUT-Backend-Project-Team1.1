@@ -6,10 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const database_1 = __importDefault(require("./config/database"));
+const authRoutes_1 = require("./routes/authRoutes");
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 (0, database_1.default)().catch((err) => console.error(err)); // trigger function to connect to database
 app.use((0, cors_1.default)({ origin: "*" }));
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: false }));
+(0, authRoutes_1.authRoute)(app);
 app.get("/", (req, res) => {
     res.status(200).send("Welcome to Housemanship Handout API!");
 });
