@@ -1,6 +1,8 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import database from "./database";
+
+import database from "./config/database";
+
 import { userRoute } from "./routes/userRoutes";
 
 const app:Application = express();
@@ -24,3 +26,5 @@ app.get("*", (req: Request, res: Response) => {
 app.listen(port, () => {
     return console.log(`Express is listening at http://localhost:${port}`);
 });
+
+export default app

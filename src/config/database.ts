@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import { ConnectionOptions } from 'tls';
+
 mongoose.set("debug", true); // this logs mongo query to terminal
 
 const connectionParams = {
@@ -8,11 +10,11 @@ const connectionParams = {
 
 const database = async () => {
     await mongoose
-        .connect("mongodb://localhost:27017/handout", connectionParams)
+        .connect("mongodb://localhost:27017/handout", connectionParams as ConnectionOptions)
         .then(() => {
             console.log("Connected to Handout DB on localhost!");
         })
-        .catch((err: any) => {
+        .catch((err) => {
             console.error(`Error connecting to the database. n${err}`);
         });
 };
