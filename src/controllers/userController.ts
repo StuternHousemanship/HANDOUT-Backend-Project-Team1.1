@@ -4,6 +4,10 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendConfirmEMail } from "../config/nodemailerConfig";
 import { generateCode } from "../config/appConfig";
+import * as dotenv from 'dotenv'
+
+dotenv.config();
+const TOKEN_SECRET = String(process.env.TOKEN_SECRET);
 
 export const createUser = async (req: Request, res: Response) => {
     const code = generateCode();
@@ -86,15 +90,15 @@ export const authenticate = async (req: Request, res: Response) => {
                     return res.status(401).send({
                         message: "Pending Account. Please Verify Your Email!",
                     });
-                }
+                } 
 
-                const token = jwt.sign({ body }, "token_secret", {
+                const token = jwt.sign({ body }, TOKEN_SECRET, {
                     expiresIn: "2h",
                 });
-                // res.cookie("auth_token", token);
+                res.cookie("handout_token", token);
                 res.status(200).json({ message: "Login Succesful", token });
             } else {
-                res.status(400).json({ error: "Invalid Password" });
+                res.status(400).json({ error: "Invalid credentials" });
             }
         } else {
             res.status(401).json({ error: "User does not exist" });
