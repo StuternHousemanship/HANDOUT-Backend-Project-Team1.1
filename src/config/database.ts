@@ -5,7 +5,6 @@ mongoose.set("debug", true); // this logs mongo query to terminal
 
 const connectionParams = {
     useNewUrlParser: true,
-    useCreateIndex: true,
     useUnifiedTopology: true,
 };
 
