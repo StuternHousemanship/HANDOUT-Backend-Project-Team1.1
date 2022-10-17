@@ -1,12 +1,19 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
+
 import database from "./config/database";
+
+import { userRoute } from "./routes/userRoutes";
 
 const app:Application = express();
 const port:number | string = process.env.PORT || 3000;
 
 database().catch((err) => console.error(err)); // trigger function to connect to database
 app.use(cors({ origin: "*" }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+userRoute(app);
 
 app.get("/", (req: Request, res: Response) => {
     res.status(200).send("Welcome to Housemanship Handout API!");
