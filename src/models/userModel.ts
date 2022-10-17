@@ -1,14 +1,7 @@
 import mongoose, { Schema } from "mongoose";
+import UserData from "../interfaces/userData";
 
-type UserData = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    mobile: number;
-    password: string;
-    active: boolean;
-    verificationCode: string;
-};
+
 
 const userSchema = new Schema<UserData>(
     {
