@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import { ConnectionOptions } from 'tls';
+import { ConnectionOptions } from "tls";
+
 
 mongoose.set("debug", true); // this logs mongo query to terminal
 
@@ -10,7 +11,11 @@ const connectionParams = {
 
 const database = async () => {
     await mongoose
-        .connect("mongodb://localhost:27017/handout", connectionParams as ConnectionOptions)
+
+        .connect(
+            "mongodb://localhost:27017/handout",
+            connectionParams as ConnectionOptions
+        )
         .then(() => {
             console.log("Connected to Handout DB on localhost!");
         })
@@ -18,5 +23,6 @@ const database = async () => {
             console.error(`Error connecting to the database. n${err}`);
         });
 };
+
 
 export default database;
