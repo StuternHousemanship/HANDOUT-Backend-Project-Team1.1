@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/userModel";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import { sendConfirmEMail } from "../config/nodemailerConfig";
 import { generateCode } from "../config/appConfig";
 

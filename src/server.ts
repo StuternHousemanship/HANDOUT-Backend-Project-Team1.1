@@ -1,9 +1,14 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-
 import database from "./config/database";
 
 import { userRoute } from "./routes/userRoutes";
+
+import * as dotenv from 'dotenv'
+
+
+dotenv.config();
+
 
 const app:Application = express();
 const port:number | string = process.env.PORT || 3000;

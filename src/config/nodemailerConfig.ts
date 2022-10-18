@@ -19,7 +19,7 @@ export const sendConfirmEMail = async (
     email: string,
     verificationCode: string
 ) => {
-    let info = await transporter.sendMail({
+    const info = await transporter.sendMail({
         from: '"Sadiq from Handout" <agssambo@gmail.com>',
         to: email,
         subject: "Handout Confirmation Email",
