@@ -25,7 +25,7 @@ export const createUser = async (req: Request, res: Response) => {
     });
 
     const check = await findUser("email", newUser.email);
-    if (check) return res.status(400).json("User already exists, please login");
+    if (check) return res.status(400).json("User already exists");
 
     await newUser.save();
     sendConfirmEMail(
