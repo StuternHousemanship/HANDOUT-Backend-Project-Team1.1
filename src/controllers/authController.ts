@@ -6,6 +6,7 @@ import { sendConfirmEMail } from "../config/nodemailerConfig";
 import { generateCode } from "../config/generateCode";
 import * as dotenv from "dotenv";
 import { findUser } from "../services/userExists";
+import { verifyPassword } from "../services/verifyPassword";
 
 dotenv.config();
 const TOKEN_SECRET = String(process.env.TOKEN_SECRET);
@@ -48,35 +49,29 @@ export const verifyUserEmail = async (req: Request, res: Response) => {
 };
 
 export const authenticate = async (req: Request, res: Response) => {
-    try {
-        const body = req.body;
-        const user = await User.findOne({ email: body.email });
+    const user = await findUser(
+        "verificationCode",
+        req.params.verificationCode
+    );
+    if (!user) return res.status(404).send({ message: "User Not found." });
 
-        if (user) {
-            const validPassword = await bcrypt.compare(
-                body.password,
-                user.password
-            );
-            if (validPassword) {
-                if (!user.active) {
-                    return res.status(401).send({
-                        message: "Pending Account. Please Verify Your Email!",
-                    });
-                } 
+    const validPassword = await verifyPassword(
+        req.body.password,
+        user.password
+    );
 
-                const token = jwt.sign({ body }, TOKEN_SECRET, {
-                    expiresIn: "2h",
-                });
-                res.cookie("handout_token", token);
-                res.status(200).json({ message: "Login Succesful", token });
-            } else {
-                res.status(400).json({ error: "Invalid credentials" });
-            }
-        } else {
-            res.status(401).json({ error: "User does not exist" });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(400).json(error);
+    if (!validPassword)
+        return res.status(400).json({ error: "Invalid credentials" });
+
+    if (!user.active) {
+        return res.status(401).send({
+            message: "Pending Account. Please Verify Your Email!",
+        });
     }
+
+    const token = jwt.sign(req.body, TOKEN_SECRET, {
+        expiresIn: "2h",
+    });
+    res.cookie("handout_token", token);
+    res.status(200).json({ message: "Login Succesful", token });
 };
