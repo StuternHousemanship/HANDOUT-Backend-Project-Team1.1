@@ -10,6 +10,8 @@ const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 (0, database_1.default)().catch((err) => console.error(err)); // trigger function to connect to database
 app.use((0, cors_1.default)({ origin: "*" }));
+app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: false }));
 app.get("/", (req, res) => {
     res.status(200).send("Welcome to Housemanship Handout API!");
 });

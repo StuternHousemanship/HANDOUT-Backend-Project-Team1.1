@@ -16,7 +16,6 @@ const mongoose_1 = __importDefault(require("mongoose"));
 mongoose_1.default.set("debug", true); // this logs mongo query to terminal
 const connectionParams = {
     useNewUrlParser: true,
-    useCreateIndex: true,
     useUnifiedTopology: true,
 };
 const database = () => __awaiter(void 0, void 0, void 0, function* () {

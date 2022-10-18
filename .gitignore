@@ -1,8 +1,4 @@
 node_modules
-<<<<<<< HEAD
 .env
-formats.txt
 build
-=======
-.env
->>>>>>> develop
+
