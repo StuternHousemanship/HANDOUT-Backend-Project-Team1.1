@@ -3,7 +3,7 @@ import User from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendConfirmEMail } from "../config/nodemailerConfig";
-import { generateCode } from "../config/generateCode";
+import { generateCode } from "../services/generateCode";
 import * as dotenv from "dotenv";
 import { findUser } from "../services/userExists";
 import { verifyPassword } from "../services/verifyPassword";
