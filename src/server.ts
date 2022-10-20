@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import * as dotenv from 'dotenv'
 import database from "./config/database";
+import { authRoute } from "./routes/authRoutes";
 
 dotenv.config();
 
@@ -12,6 +13,8 @@ database().catch((err) => console.error(err)); // trigger function to connect to
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+authRoute(app);
 
 app.get("/", (req: Request, res: Response) => {
     res.status(200).send("Welcome to Housemanship Handout API!");
