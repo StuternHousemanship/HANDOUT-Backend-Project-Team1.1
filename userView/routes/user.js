@@ -5,7 +5,7 @@ const {
   viewCurrentUser,
   updateUser,
   updateUserPassword,
-} = require('../service/user')
+} = require('../userRepository/index')
 
 
 router.get('/showMe', authenticateUser, viewCurrentUser);
