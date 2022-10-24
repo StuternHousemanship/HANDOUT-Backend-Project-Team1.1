@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/userModel";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { sendConfirmEMail } from "../config/nodemailerConfig";
+import { sendConfirmEMail } from "../services/nodemailerConfig";
 import { generateCode } from "../services/generateCode";
 import * as dotenv from "dotenv";
 import { findUser } from "../services/userExists";
