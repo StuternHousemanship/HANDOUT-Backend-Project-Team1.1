@@ -26,7 +26,7 @@ export const sendConfirmEMail = async (
         html: `
           <h2>Hello ${name}!</h2>
             <p>Thank you for signing up to Handout.</p>
-            <p>Please confirm your email with this link: <a target="_blank" href="http://localhost:3000/auth/confirm/${verificationCode}"> Click here</a></p>
+            <p>Please confirm your email with this code: <strong>${verificationCode}</strong></p>
           </div>`,
     });
     console.log("Message sent: %s", info.messageId);

@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import UserType from "../interfaces/userType";
+import UserType from "../Interfaces/userType";
 
 const userSchema = new Schema<UserType>(
     {

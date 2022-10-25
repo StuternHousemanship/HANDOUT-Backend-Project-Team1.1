@@ -1,17 +1,20 @@
-import { Request, Response } from "express";
-import User from "../models/userModel";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { sendConfirmEMail } from "../services/nodemailerConfig";
-import { generateCode } from "../services/generateCode";
 import * as dotenv from "dotenv";
-import { findUser } from "../services/userExists";
-import { verifyPassword } from "../services/verifyPassword";
+import { Request, Response } from "express";
+import { generateCode } from "../../Services/generateCode";
+import bcrypt from "bcrypt";
+import { AuthRepository } from "../../Repository/Auth";
+import User from "../../Models/userModel";
+import { findUser } from "../userExists";
+import { sendConfirmEMail } from "../nodemailerEmail";
+import { verifyPassword } from "../verifyPassword";
+import jwt from "jsonwebtoken";
 
 dotenv.config();
-const TOKEN_SECRET = String(process.env.TOKEN_SECRET);
 
-export const createUser = async (req: Request, res: Response) => {
+const TOKEN_SECRET = String(process.env.TOKEN_SECRET);
+const auth = new AuthRepository();
+
+export const createUserService = async (req: Request, res: Response) => {
     const code = generateCode();
 
     const newUser = new User({
@@ -24,10 +27,10 @@ export const createUser = async (req: Request, res: Response) => {
         verificationCode: code,
     });
 
-    const check = await findUser("email", newUser.email);
-    if (check) return res.status(400).json("User already exists");
+    const isUserExist = await User.findOne({ email: newUser.email });
+    if (isUserExist) return res.status(400).json("User already exists");
 
-    await newUser.save();
+    await auth.createUser(newUser);
     sendConfirmEMail(
         newUser.firstName,
         newUser.email,
@@ -36,19 +39,19 @@ export const createUser = async (req: Request, res: Response) => {
     return res.status(201).json(newUser);
 };
 
-export const verifyUserEmail = async (req: Request, res: Response) => {
+export const verifyEmailService = async (req: Request, res: Response) => {
     const user = await findUser(
         "verificationCode",
-        req.params.verificationCode
+        req.body.verificationCode
     );
     if (!user) return res.status(404).send({ message: "User Not found." });
 
     user.active = true;
-    await user.save();
+    await auth.createUser(user);
     res.status(200).send("Email verified! Close this tab and login");
-};
+}
 
-export const authenticate = async (req: Request, res: Response) => {
+export const loginService = async (req: Request, res: Response) => {
     const user = await findUser(
         "verificationCode",
         req.params.verificationCode
