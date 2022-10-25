@@ -12,7 +12,6 @@ const errorHandlerMiddleware = (err, req, res, next) => {
       .map((item) => item.message)
       .join(',')
   }
-  
 
   res.status(defaultError.statusCode).json({ msg: defaultError.msg })
 }
