@@ -1,0 +1,6 @@
+/node_modules
+/service/auth.js
+/routes/auth.js
+/.env
+/db
+/controller
