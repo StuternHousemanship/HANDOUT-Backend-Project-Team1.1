@@ -1,4 +1,4 @@
-type UserData = {
+type UserType = {
     firstName: string;
     lastName: string;
     email: string;
@@ -8,4 +8,4 @@ type UserData = {
     verificationCode: string;
 };
 
-export default UserData
+export default UserType

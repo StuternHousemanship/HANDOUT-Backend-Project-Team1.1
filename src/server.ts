@@ -1,10 +1,8 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-
-import { authRoute } from "./routes/authRoutes";
-
 import * as dotenv from 'dotenv'
 import database from "./config/database";
+import { authRoute } from "./routes/authRoutes";
 
 dotenv.config();
 
