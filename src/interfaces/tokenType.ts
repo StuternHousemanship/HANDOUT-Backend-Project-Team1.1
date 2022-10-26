@@ -1,5 +1,5 @@
 type TokenType = {
-userId:number
-token: string
-}
-export default TokenType
+  userId: number;
+  token: string;
+};
+export default TokenType;
