@@ -1,15 +1,19 @@
 import { Request, Response } from "express";
+import dotenv from 'dotenv'
 import joi from 'joi'
 import {tokens} from '../../models/tokenModel'
 import User from "../../models/userModel";
-import {digitalCode} from "../config/digitalCode"
+import {digitalCode} from '../digitalCode'
+import {passwordResetEMail} from '../nodemailerConfig'
 
-export const forgotPassword = async (req: Request, res: Response) => {
+dotenv.config()
+
+export const forgotPasswordService = async (req: Request, res: Response) => {
 
   const code = digitalCode()
     try {
       const result = joi.object({email: joi.string().email().required()})
-      const error = result.validate(req.body)
+      const { error } = result.validate(req.body)
       if (error)
       return res.json({
         status: 'error',
@@ -30,6 +34,14 @@ export const forgotPassword = async (req: Request, res: Response) => {
           token: code
         }).save()
       }
+      
+      const link = `${process.env.CLIENT_URL}/resetPass/${user.id}/${token.token}`
+      await passwordResetEMail(user.email, "password reset", link)
+
+      res.json({
+        status: 200,
+        success: "password reset link sent to your email account"
+      })
       
 
     } catch (err) {
