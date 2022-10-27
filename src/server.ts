@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 authRoute(app);
 
 
+
 app.get("/", (req: Request, res: Response) => {
     res.status(200).send("Welcome to Housemanship Handout API!");
 });
