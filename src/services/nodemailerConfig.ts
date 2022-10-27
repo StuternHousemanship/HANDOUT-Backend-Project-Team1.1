@@ -49,7 +49,7 @@ export const passwordResetEMail = async (
           <h2>Hello ${name}!</h2>
             <p>You requested to reset your password</p>
  
-            <p>Fill in the code${digitalCode}</p>
+            <p>Fill in the code:<strong>${digitalCode}</p>
             
             <p>This link will expire within 6 minutes.</p>
            

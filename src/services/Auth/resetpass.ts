@@ -11,6 +11,7 @@ dotenv.config()
 export const forgotPasswordService = async (req: Request, res: Response) => {
 
   const code = digitalCode()
+  console.log(code)
     try {
       const result = joi.object({email: joi.string().email().required()})
       const { error } = result.validate(req.body)
@@ -36,7 +37,7 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
       }
       
       const link = `${process.env.CLIENT_URL}/resetPass/${user.id}/${token.token}`
-      await passwordResetEMail(user.email, "password reset", link)
+      await passwordResetEMail("User", user.email, link)
 
       res.json({
         status: 200,
@@ -47,4 +48,4 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
     } catch (err) {
       console.log(err)
     }
-  }
+}
