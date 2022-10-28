@@ -1,8 +1,8 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import * as dotenv from 'dotenv'
-import database from "./config/database";
-import { authRoute } from "./routes/authRoutes";
+import database from "./Config/database";
+import { authRoute } from "./Routes/authRoutes";
 
 dotenv.config();
 
@@ -19,6 +19,8 @@ authRoute(app);
 app.get("/", (req: Request, res: Response) => {
     res.status(200).send("Welcome to Housemanship Handout API!");
 });
+
+
 app.get("*", (req: Request, res: Response) => {
     res.status(400).send("This route does not exist");
 });
