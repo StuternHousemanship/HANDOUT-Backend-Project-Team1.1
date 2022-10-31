@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose"
 import UserType from "../interfaces/userType";
 
 const userSchema = new Schema<UserType>(
@@ -10,7 +10,6 @@ const userSchema = new Schema<UserType>(
         password: { type: String, required: true },
         active: { type: Boolean, required: true },
         verificationCode: { type: String, required: true, unique: true }
-
     },
     { timestamps: true }
 );
