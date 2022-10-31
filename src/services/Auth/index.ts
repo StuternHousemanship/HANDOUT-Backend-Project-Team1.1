@@ -1,12 +1,12 @@
 import * as dotenv from "dotenv";
 import { Request, Response } from "express";
-import { generateCode } from "../../Services/generateCode";
+import { generateCode } from "../../services/generateCode";
 import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
-import User from "../../Models/userModel";
-import { findUser } from "../userExists";
-import { sendConfirmEMail } from "../nodemailerEmail";
-import { verifyPassword } from "../verifyPassword";
+import User from "../../models/userModel";
+import { findUser } from "../../services/userExists";
+import { sendConfirmEMail } from "../../services/nodemailerEmail";
+import { verifyPassword } from "../../services/verifyPassword";
 import jwt from "jsonwebtoken";
 
 dotenv.config();
