@@ -24,16 +24,12 @@ export const sendConfirmEMail = async (
     to: email,
     subject: "Handout Confirmation Email",
     html: `
-          <h2>Hello ${name}!</h2>
-            <p>Thank you for signing up to Handout.</p>
- 
-            <p style="text-align:center;margin-top:10px">Please confirm your email with this link: <a target="_blank" href="http://localhost:3000/auth/confirm/${verificationCode}"> Click here</a></p>
-
-            <p>Please confirm your email with this link: <a target="_blank" href="http://localhost:3000/auth/confirm/${verificationCode}"> Click here</a></p>
-
-          </div>`,
-  });
-  console.log("Message sent: %s", info.messageId);
+      <h2>Hello ${name}!</h2>
+        <p>Thank you for signing up to Handout.</p>
+        <p>Please confirm your email with this code: <strong>${verificationCode}</strong></p>
+      </div>`,
+});
+console.log("Message sent: %s", info.messageId);
 };
 
 export const passwordResetEMail = async (
@@ -49,9 +45,9 @@ export const passwordResetEMail = async (
           <h2>Hello ${name}!</h2>
             <p>You requested to reset your password</p>
  
-            <p>Fill in the code:<strong>${digitalCode}</p>
+            <p>Fill in the code: <strong>${digitalCode}</strong></p>
             
-            <p>This link will expire within 6 minutes.</p>
+            <p>This code will expire within 6 minutes.</p>
            
             <p>If you don't want to reset your credentials, just ignore this message and nothing will be changed.
             
