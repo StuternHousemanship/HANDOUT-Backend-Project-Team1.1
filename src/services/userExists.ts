@@ -1,4 +1,4 @@
-import User from "../Models/userModel";
+import User from "../models/userModel";
 
 export const findUser = async (param: string, value: string) => {
     const user = await User.findOne({param: value});
@@ -7,3 +7,4 @@ export const findUser = async (param: string, value: string) => {
     }
     return false;
 }
+ 

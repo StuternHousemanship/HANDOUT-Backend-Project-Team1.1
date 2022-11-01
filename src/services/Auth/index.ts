@@ -110,6 +110,7 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
           token: code
         }).save()
       }
+      console.log(token)
       
       await sendForgotpassword("User", user.email, code)
 
@@ -122,9 +123,10 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
     } catch (err) {
       console.log(err)
     }
+
 }
 
-export const resetPass = async (req: Request, res: Response) => {
+export const resetPasswordService = async (req: Request, res: Response) => {
  
     try {
       const result = joi.object({ password: joi.string().required() });
@@ -144,7 +146,7 @@ export const resetPass = async (req: Request, res: Response) => {
   
       const token = await tokens.findOne({
         userId: user.id,
-        toking: req.params.token,
+        token: req.params.token,
       });
       if (!token)
         return res.json({
@@ -166,4 +168,5 @@ export const resetPass = async (req: Request, res: Response) => {
         error: "something went wrong",
       });
     }
-  };
+};
+

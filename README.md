@@ -2,7 +2,6 @@
     HANDOUT API
 </h2>
 
-
 ## ℹ️ About
 
 <p>
@@ -21,10 +20,12 @@ The project is built with the following packages:
 - [Prettier Code Formatter](https://prettier.io/)
 
 ## 🚀 Getting started
+
 ### Development
-* Clone the repo
-* Checkout to `develop branch`
-* run `npm install` to install dependencies
-* run `npm run start:dev` to start the app in development mode (running typescript)
-* run `npm run start` to build and start the app in node mode, or
-* run `npm build` to build the app
+
+- Clone the repo
+- Checkout to `develop branch`
+- run `npm install` to install dependencies
+- run `npm run start:dev` to start the app in development mode (running typescript)
+- run `npm run start` to build and start the app in node mode, or
+- run `npm build` to build the app
