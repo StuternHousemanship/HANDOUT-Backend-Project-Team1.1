@@ -1,10 +1,15 @@
 import * as dotenv from "dotenv";
 import nodemailer from "nodemailer";
+import sgMail from '@sendgrid/mail'
+
 
 dotenv.config();
 
 const NODEMAILER_EMAIL = String(process.env.NODEMAILER_EMAIL);
 const NODEMAILER_PASS = String(process.env.NODEMAILER_PASS);
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY as string)
+
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -32,16 +37,16 @@ export const sendConfirmEMail = async (
 console.log("Message sent: %s", info.messageId);
 };
 
-export const passwordResetEMail = async (
+export const sendForgotpassword = async (
   name: string,
   email: string,
   digitalCode: string
 ) => {
-  const info = await transporter.sendMail({
-    from: '"Sadiq from Handout" <agssambo@gmail.com>',
-    to: email,
-    subject: "Password Reset Email",
-    html: `
+    const info = {
+      from: "handout@beargaze.com",
+      to: email,
+      subject: "Password Reset Email",
+      html: `
           <h2>Hello ${name}!</h2>
             <p>You requested to reset your password</p>
  
@@ -55,8 +60,17 @@ export const passwordResetEMail = async (
            
 
           </div>`,
-  });
-
-  console.log("Message sent: %s", info.messageId);
-
+    }      
+    
+   try {
+      await sgMail.send(info)
+      console.log('Email sent successfully')
+    } catch (error){
+      console.error('Error sending mail')
+      console.error(error)
+    }
 }
+
+
+
+

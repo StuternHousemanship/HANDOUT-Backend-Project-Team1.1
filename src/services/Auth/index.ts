@@ -5,13 +5,13 @@ import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
 import User from "../../models/userModel";
 import { findUser } from "../userExists";
-import { sendConfirmEMail } from "../nodemailerEmail";
+import { sendConfirmEMail } from "../Email";
 import { verifyPassword } from "../verifyPassword";
 import jwt from "jsonwebtoken";
 import joi from 'joi'
 import {tokens} from '../../models/tokenModel'
 import {digitalCode} from '../../services/digitalCode'
-import {passwordResetEMail} from '../nodemailerEmail'
+import {sendForgotpassword} from '../Email'
 
 dotenv.config();
 
@@ -111,7 +111,7 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
         }).save()
       }
       
-      await passwordResetEMail("User", user.email, code)
+      await sendForgotpassword("User", user.email, code)
 
       res.json({
         status: 200,
