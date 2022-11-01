@@ -123,3 +123,19 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
       console.log(err)
     }
 }
+
+export const logoutService = async (req: Request, res: Response) => {
+ 
+
+  const logout = res.clearCookie('token')
+  if(!logout) {
+    return res.status(400).json({
+      status: 'error'
+    })
+  } else {
+    res.status(200).json({
+      message: "logged out successfully",
+     status: 200
+    })
+  }
+}
