@@ -3,32 +3,12 @@ import {Request, Response, NextFunction} from "express"
 import { Error } from "mongoose"
 
 
-// const errorHandlerMiddleware = (err:Error, req:Request, res:Response, next:NextFunction) => {
-  
-//   const defaultError = {
-//     statusCode: getStatusCode(err.name) || StatusCodes.INTERNAL_SERVER_ERROR,
-//     msg: err.message || 'Something went wrong, try again later',
-//   }
-//   if (err.name === 'ValidationError') {
-//     defaultError.statusCode = StatusCodes.BAD_REQUEST
-//     defaultError.msg = Object.values(err.message)
-//       .map((item:any) => item.message)
-//       .join(',')
-//   }
-  
-
-//   res.status(defaultError.statusCode).json({ msg: defaultError.msg })
-// }
 const errorHandlerMiddleware = (err:Error, req:Request, res:Response, next:NextFunction) => {
   let customError = {
-    // set default
+  
     statusCode: getStatusCode(err.name)  || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || 'Something went wrong try again later',
   }
-
-  // if (err instanceof CustomAPIError) {
-  //   return res.status(err.statusCode).json({ msg: err.message })
-  // }
 
   if (err.name === 'ValidationError') {
     customError.msg = Object.values(err.name)

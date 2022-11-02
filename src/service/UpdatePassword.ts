@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import User from '../models/User';
+import candidate from '../repository/users';
 import { StatusCodes } from 'http-status-codes';
 import { comparePassword} from "../models/User";
 import{ BadRequestError, NotFoundError, UnAuthenticatedError } from '../errors/index';
@@ -13,7 +13,7 @@ const updateUserPassword = async (req:Request, res:Response) => {
     const userId: string  = req.user.userId.userId;
 
 
-    const user = await User.findOne({ _id: userId }).select('+password');
+    const user = await candidate.findOne({ _id: userId }).select('+password');
   
     const isPasswordCorrect = await comparePassword(user.password, oldPassword);
     if (!isPasswordCorrect) {

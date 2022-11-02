@@ -1,17 +1,17 @@
 import express from 'express'
 const router = express.Router();
-const authenticateUser = require('../middleware/auth');
+import authenticateUser from '../middleware/auth';
 import{
-  viewCurrentUser,
-  updateUser,
-  updateUserPassword,
-} from  '../service/index'
+  CurrentUser,
+  editUser,
+  editUserPassword
+} from  '../controller/user'
 
 
-router.get('/showMe', authenticateUser, viewCurrentUser);
-router.patch('/updateUser', authenticateUser, updateUser);
-router.patch('/updateUserPassword',authenticateUser, updateUserPassword);
+router.get('/showMe', authenticateUser, CurrentUser);
+router.patch('/updateUser', authenticateUser, editUser);
+router.patch('/updateUserPassword',authenticateUser, editUserPassword);
 
 
 
-module.exports = router;
+export default router;

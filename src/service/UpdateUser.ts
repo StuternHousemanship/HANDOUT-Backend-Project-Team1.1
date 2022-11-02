@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import User from "../models/User";
+import candidate from "../repository/users";
 const { StatusCodes } = require('http-status-codes');
-import { comparePassword, createJWT } from "../models/User";
+import { createJWT } from "../models/User";
+
 const { BadRequestError, NotFoundError, UnAuthenticatedError } = require('../errors/index');
 
 
@@ -10,7 +11,7 @@ const updateUser = async (req:Request, res:Response) => {
     if (!email || !name || !lastName || !location) {
       throw new BadRequestError('Please provide all values');
     }
-    const user = await User.findOne({ _id: req.user.userId.userId});
+    const user = await candidate.findOne({ _id: req.user.userId.userId});
   
     user.email = email;
     user.firstName = name;
