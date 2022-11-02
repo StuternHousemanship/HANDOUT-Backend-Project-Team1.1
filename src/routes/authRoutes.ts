@@ -7,7 +7,6 @@ import {
 
 export const authRoute = (app: Application) => {
     app.post("/auth/signup", create);
-    // app.get("/auth/confirm/:verificationCode", verifyUserEmail);
     app.post("/auth/confirm", verifyUserEmail);
     app.post("/auth/login", authenticate);
 };
