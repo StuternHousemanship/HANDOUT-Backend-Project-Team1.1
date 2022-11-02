@@ -3,6 +3,7 @@ import { createUserService, loginService, verifyEmailService, forgotPasswordServ
 
 
 
+
 export const create = async (req: Request, res: Response) => {
     await createUserService(req, res);
 }
