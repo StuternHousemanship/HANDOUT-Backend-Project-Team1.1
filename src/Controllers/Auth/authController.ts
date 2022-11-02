@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createUserService, loginService, verifyEmailService } from "../../Services/Auth";
+import { createUserService, loginService, verifyEmailService } from "../../services/Auth";
 
 
 

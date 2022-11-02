@@ -4,6 +4,6 @@ export const verifyPassword = async (
     formPassowrd: string,
     dbPassword: string
 ) => {
-    const check = await bcrypt.compare(formPassowrd, dbPassword);
+    const check = bcrypt.compareSync(formPassowrd, dbPassword);
     return check;
 };
