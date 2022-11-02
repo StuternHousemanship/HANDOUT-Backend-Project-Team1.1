@@ -29,17 +29,28 @@ export const createUserService = async (req: Request, res: Response) => {
     const isUserExist = await User.findOne({ email: newUser.email });
     if (isUserExist) return res.status(400).json("User already exists");
 
-    await auth.createUser(newUser);
-    await sendVerificationMail(
-        newUser.firstName,
-        newUser.email,
-        newUser.verificationCode
-    );
-    return res.status(201).json(newUser);
+    try {
+        await auth.createUser(newUser);
+        await sendVerificationMail(
+            newUser.firstName,
+            newUser.email,
+            newUser.verificationCode
+        );
+        return res
+            .status(201)
+            .json({
+                message: "Check your email for confirmation code",
+                newUser,
+            });
+    } catch (error) {
+        res.status(400).json(error);
+    }
 };
 
 export const verifyEmailService = async (req: Request, res: Response) => {
-    const user = await findUser("verificationCode", req.body.verificationCode);
+    const user = await User.findOne({
+        verificationCode: req.body.verificationCode,
+    });
     if (!user) return res.status(404).send({ message: "User Not found." });
 
     user.active = true;
@@ -50,8 +61,6 @@ export const verifyEmailService = async (req: Request, res: Response) => {
 export const loginService = async (req: Request, res: Response) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(404).json({ message: "User Not found." });
-
-    console.log("req body", req.body);
 
     const vp = bcrypt.compareSync(req.body.password, user.password);
 
