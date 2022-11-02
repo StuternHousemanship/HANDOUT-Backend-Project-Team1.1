@@ -1,9 +1,11 @@
 import sgMail from "@sendgrid/mail";
+import * as dotenv from "dotenv";
 
-// to-do: move api key to .env
-sgMail.setApiKey(
-    "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"
-);
+dotenv.config();
+
+const SENDGRIDKEY = String(process.env.SENDGRID_KEY);
+
+sgMail.setApiKey(SENDGRIDKEY);
 
 export const sendVerificationMail = async (
     name: string,

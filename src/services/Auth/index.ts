@@ -5,8 +5,6 @@ import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
 import User from "../../models/userModel";
 import { findUser } from "../userExists";
-import { sendConfirmEMail } from "../nodemailerEmail";
-import { verifyPassword } from "../verifyPassword";
 import jwt from "jsonwebtoken";
 import { sendVerificationMail } from "../sendGrid";
 
@@ -37,11 +35,6 @@ export const createUserService = async (req: Request, res: Response) => {
         newUser.email,
         newUser.verificationCode
     );
-    // sendConfirmEMail(
-    //     newUser.firstName,
-    //     newUser.email,
-    //     newUser.verificationCode
-    // );
     return res.status(201).json(newUser);
 };
 
@@ -57,11 +50,6 @@ export const verifyEmailService = async (req: Request, res: Response) => {
 export const loginService = async (req: Request, res: Response) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(404).json({ message: "User Not found." });
-
-    // const validPassword = await verifyPassword(
-    //     req.body.password,
-    //     user.password
-    // );
 
     console.log("req body", req.body);
 
