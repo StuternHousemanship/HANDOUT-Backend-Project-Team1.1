@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createUserService, loginService, logoutService, verifyEmailService, forgotPasswordService} from "../../services/Auth";
+import { createUserService, loginService, logoutService, verifyEmailService} from "../../services/Auth";
 
 
 
@@ -14,10 +14,6 @@ export const verifyUserEmail = async (req: Request, res: Response) => {
 export const authenticate = async (req: Request, res: Response) => {
     await loginService(req, res);
 };
-
-export const forgotpass = async(req: Request, res: Response) => {
-    await forgotPasswordService(req, res)
-  }
 
 export const logout = async(req: Request, res: Response) => {
     await logoutService(req, res)
