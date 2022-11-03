@@ -8,6 +8,8 @@ export const CurrentUser = async (req:Request, res: Response) => {
 }
 
 export const editUser = async (req: Request, res: Response) => {
+  console.log(req);
+  
   await updateUser(req, res);
   res.status(StatusCodes.OK);  
 }

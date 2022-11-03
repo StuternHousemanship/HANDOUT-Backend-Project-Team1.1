@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../../models/userModel';
 import { StatusCodes } from 'http-status-codes';
-import { comparePassword} from "../../models/userModel";
+import bcrypt from "bcrypt"
 import{ BadRequestError, NotFoundError, UnAuthenticatedError } from '../../errors';
 
 const updateUserPassword = async (req:Request, res:Response) => {
@@ -10,8 +10,7 @@ const updateUserPassword = async (req:Request, res:Response) => {
       throw new BadRequestError('Please provide both values');
     }
   
-    const userId: string  = req.body.userId.userId;
-
+    const userId: string  = req.body.authUser.user._id;
 
     const user = await User.findOne({ _id: userId }).select('+password');
   
@@ -19,10 +18,20 @@ const updateUserPassword = async (req:Request, res:Response) => {
     if (!isPasswordCorrect) {
       throw new UnAuthenticatedError ('Invalid Credentials');
     }
-    user.password = newPassword;
+    user.password = bcrypt.hashSync(newPassword, 8);
   
     await user.save();
+    user.password = ' '
     res.status(StatusCodes.OK).json({ msg: 'Success! Password Updated.' });
   };
 
+  
+
+  const comparePassword = async function ( userPassword: string, canditatePassword: string) {
+    const isMatch = await bcrypt.compareSync(canditatePassword, userPassword);
+    return isMatch;
+  };
+  
+
   export default updateUserPassword;
+  

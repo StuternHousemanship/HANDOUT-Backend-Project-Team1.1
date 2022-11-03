@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
 import User from "../../models/userModel";
 import { findUser } from "../userExists";
-import { createJWT, comparePassword } from "../../models/userModel";
+
 import jwt from "jsonwebtoken";
 import { sendVerificationMail } from "../sendGrid";
 
@@ -22,25 +22,13 @@ export const createUserService = async (req: Request, res: Response) => {
         lastName: req.body.lastName,
         email: req.body.email,
         mobile: req.body.mobile,
-        password: bcrypt.hashSync(req.body.password, 10),
+        password: bcrypt.hashSync(req.body.password, 8),
         active: false,
         verificationCode: code,
     });
 
     const isUserExist = await User.findOne({ email: newUser.email });
     if (isUserExist) return res.status(400).json("User already exists");
-
-    const token = newUser.schema.methods['createJWT']
-//   res.status(StatusCodes.CREATED).json({
-    // user: {
-    //   email: user.email,
-    //   lastName: user.lastName,
-    //   location: user.location,
-    //   firstName: user.firstName,
-    // },
-    // token,
-    // location: user.location,
-//   })
 
     try {
         await auth.createUser(newUser);
@@ -54,8 +42,6 @@ export const createUserService = async (req: Request, res: Response) => {
             .json({
                 message: "Check your email for confirmation code",
                 newUser,
-                token,
-                  location: newUser.location,
             });
     } catch (error) {
         res.status(400).json(error);
@@ -73,6 +59,8 @@ export const verifyEmailService = async (req: Request, res: Response) => {
     res.status(200).send("Email verified! Close this tab and login");
 };
 
+
+
 export const loginService = async (req: Request, res: Response) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(404).json({ message: "User Not found." });
@@ -81,15 +69,14 @@ export const loginService = async (req: Request, res: Response) => {
     if (!vp) {
         return res.status(400).json({ error: "Invalid credentials" })
     }
-    // if (!vp) return res.status(400).json({ error: "Invalid credentials" });
 
-    
-    const token = createJWT(user)
-try {
-    token
-    res.cookie("handout_token", token);
-    res.status(200).json({ message: "Login Succesful", token })
-} catch (error) {
-    res.status(400).json(error) 
-}
+    try {
+        const token = jwt.sign({ user }, TOKEN_SECRET, {
+            expiresIn: "2h",
+        });
+        res.cookie("handout_token", token);
+        res.status(200).json({ message: "Login Succesful", token });
+    } catch (error) {
+        res.status(400).json(error);
+    }
 };
