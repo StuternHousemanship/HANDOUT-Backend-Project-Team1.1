@@ -4,14 +4,11 @@ import { generateCode } from "../../services/generateCode";
 import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
 import User from "../../models/userModel";
-import { findUser } from "../userExists";
-import { verifyPassword } from "../verifyPassword";
 import jwt from "jsonwebtoken";
 import joi from 'joi'
 import {tokens} from '../../models/tokenModel'
 import {digitalCode} from '../../services/digitalCode'
-import {sendForgotpassword} from '../Email'
-import { sendVerificationMail } from "../sendGrid";
+import { sendVerificationMail, sendForgotpassword } from "../sendGrid";
 
 dotenv.config();
 
@@ -134,29 +131,20 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
 export const resetPasswordService = async (req: Request, res: Response) => {
  
     try {
-      const result = joi.object({ password: joi.string().required() });
-      const { error } = result.validate(req.body);
-      if (error)
-        return res.json({
-          status: 400,
-          error: "invalid password format",
-        });
-  
       const user = await User.findById(req.params.userId);
       if (!user)
         return res.json({
           status: 400,
-          error: "invalid link or expired",
+          error: "invalid user or expired",
         });
-  
+       console.log(user)
       const token = await tokens.findOne({
-        userId: user.id,
-        token: req.params.token,
+        token: req.body.token,
       });
       if (!token)
         return res.json({
           status: 400,
-          error: "invalid link or expired",
+          error: "invalid code or expired",
         });
   
       user.password = req.body.password;
