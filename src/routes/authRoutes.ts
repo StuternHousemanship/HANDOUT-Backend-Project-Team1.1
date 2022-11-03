@@ -3,8 +3,7 @@ import {
     authenticate,
     create,
     verifyUserEmail,
-    resetPass,
-    forgotPass
+    resetPass
 } from "../Controllers/Auth/authController";
 
 /**
@@ -160,7 +159,6 @@ export const authRoute = (app: Application) => {
      *                    example: Pass1234#
      */
     app.post("/auth/login", authenticate);
-    app.post("/auth/forgotpassword", forgotPass);
     app.post("/auth/resetpassword", resetPass);
 };
 

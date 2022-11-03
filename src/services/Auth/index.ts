@@ -5,10 +5,8 @@ import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
 import User from "../../models/userModel";
 import jwt from "jsonwebtoken";
-import joi from 'joi'
-import {tokens} from '../../models/tokenModel'
-import {digitalCode} from '../../services/digitalCode'
-import { sendVerificationMail, sendForgotpassword } from "../sendGrid";
+import {tokens} from '../../models/tokenModel';
+import { sendVerificationMail} from "../sendGrid";
 
 dotenv.config();
 
@@ -85,53 +83,10 @@ export const loginService = async (req: Request, res: Response) => {
     }
 };
 
-export const forgotPasswordService = async (req: Request, res: Response) => {
-
-  const code = digitalCode()
-  console.log(code)
-    try {
-      const result = joi.object({email: joi.string().email().required()})
-      const { error } = result.validate(req.body)
-      if (error)
-      return res.json({
-        status: 'error',
-        error: 'Enter a valid email'
-      })
-
-      const user = await User.findOne({email: req.body.email})
-      if(!user)
-      return res.json({
-        status: "error",
-        error: "This email does not exist"
-      })
-  
-      let token = await tokens.findOne({userId: user.id});
-      if (!token) {
-        token = await new tokens({
-          userId: user.id,
-          token: code
-        }).save()
-      }
-      console.log(token)
-      
-      await sendForgotpassword("User", user.email, code)
-
-      res.json({
-        status: 200,
-        success: "password reset link sent to your email account"
-      })
-      
-
-    } catch (err) {
-      console.log(err)
-    }
-
-}
-
 export const resetPasswordService = async (req: Request, res: Response) => {
  
     try {
-      const user = await User.findById(req.params.userId);
+      const user = await User.findOne(req.body.userId);
       if (!user)
         return res.json({
           status: 400,
@@ -139,14 +94,14 @@ export const resetPasswordService = async (req: Request, res: Response) => {
         });
        console.log(user)
       const token = await tokens.findOne({
+        userId: user.id,
         token: req.body.token,
       });
       if (!token)
         return res.json({
           status: 400,
-          error: "invalid code or expired",
-        });
-  
+          error: "invalid link or expired",
+        });  
       user.password = req.body.password;
       await user.save();
       await token.delete();
