@@ -46,7 +46,7 @@ export const sendForgotpassword = async (
    
               <p>Fill in the code: <strong>${digitalCode}</strong></p>
               
-              <p>This code will expire within 6 minutes.</p>
+              <p>This code will expire within 60 minutes.</p>
              
               <p>If you don't want to reset your credentials, just ignore this message and nothing will be changed.
               
