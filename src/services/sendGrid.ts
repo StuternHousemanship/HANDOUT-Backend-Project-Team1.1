@@ -29,4 +29,4 @@ export const sendVerificationMail = async (
         .catch((error) => {
             console.error(error);
         });
-};
+

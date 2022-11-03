@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { NextFunction } from "express";
 
+
 const TOKEN_SECRET = String(process.env.TOKEN_SECRET);
 const userSchema = new Schema<UserType>(
     {

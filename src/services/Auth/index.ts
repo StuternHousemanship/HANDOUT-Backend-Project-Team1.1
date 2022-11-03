@@ -51,7 +51,9 @@ export const createUserService = async (req: Request, res: Response) => {
 export const verifyEmailService = async (req: Request, res: Response) => {
     const user = await User.findOne({
         verificationCode: req.body.verificationCode,
+
     }).select('+verificationCode');
+
     if (!user) return res.status(404).send({ message: "User Not found." });
 
     user.active = true;
@@ -60,10 +62,17 @@ export const verifyEmailService = async (req: Request, res: Response) => {
 };
 
 
+export const loginService = async (req: Request, res: Response) => {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) return res.status(404).json({ message: "User Not found." });
 
 export const loginService = async (req: Request, res: Response) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(404).json({ message: "User Not found." });
+
+    const vp = bcrypt.compareSync(req.body.password, user.password);
+
+    if (!vp) return res.status(400).json({ error: "Invalid credentials" });
 
     const vp = bcrypt.compareSync(req.body.password, user.password);
     if (!vp) {
@@ -79,4 +88,4 @@ export const loginService = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(400).json(error);
     }
-};
+
