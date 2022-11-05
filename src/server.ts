@@ -4,10 +4,6 @@ import * as dotenv from 'dotenv'
 import database from "./config/database";
 import { authRoute } from "./routes/authRoutes";
 import userRouter from './routes/userProfile';
-=======
-import * as dotenv from "dotenv";
-import database from "./config/database";
-import { authRoute } from "./routes/authRoutes";
 
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
@@ -46,7 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 
 authRoute(app);
 app.use("/",userRouter)
-=======
+
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.get("/", (req: Request, res: Response) => {

@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import * as dotenv from 'dotenv'
+import * as dotenv from 'dotenv';
+import { Logger } from "tslog";
+
+const log: Logger = new Logger({ name: "myLogger" });
+
 
 dotenv.config();
 
@@ -27,7 +31,7 @@ export const verifyToken =  (
     req.body.authUser = decoded
     
     } catch (err) {
-        console.log(err);
+        log.error(err);
         
         return res.status(401).send("Invalid Token");
     }

@@ -11,7 +11,7 @@ const userSchema = new Schema<UserType>(
         mobile: { type: Number, required: true },
         password: { type: String, required: true},
         active: { type: Boolean, required: true },
-        verificationCode: { type: String, required: true, unique: true, select:false },
+        verificationCode: { type: String, select:false },
         location: {type:String, trim: true, maxlength: 20, default: 'my city'},
     },
     { timestamps: true }

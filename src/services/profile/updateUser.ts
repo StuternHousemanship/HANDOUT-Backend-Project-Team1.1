@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { AuthRepository } from "../../Repository/Auth";
-const auth = new AuthRepository();
+new AuthRepository();
 
 
 
 const updateUser = async (req:Request, res:Response) => {
     try {
-        const user = await auth.userEdited(req.body.email)
+        const user = await new AuthRepository().userEdited(req.body.email)
          partialUpdate(user, req.body)
        await user.save()
         return user
