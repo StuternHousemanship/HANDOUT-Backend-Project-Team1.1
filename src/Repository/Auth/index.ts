@@ -51,14 +51,3 @@ export class AuthRepository {
 
 
 
-  // public async hashedPassword (password:string): Promise<any>{
-    //     const  isPassword = bcrypt.compareSync(password, password);
-    //         return !! isPassword
-    // }
-    // public async findUser (user:UserType): Promise<any>{
-    //     const  getUser= await User.find({user});
-    //         return !! getUser
-    // }
-   
-
-
