@@ -7,6 +7,10 @@ import { AuthRepository } from "../../Repository/Auth";
 import jwt from "jsonwebtoken";
 import { sendVerificationMail } from "../sendGrid";
 import UserType from "../../interfaces/userType";
+=======
+import { findUser } from "../userExists";
+import jwt from "jsonwebtoken";
+import { sendVerificationMail } from "../sendGrid";
 
 dotenv.config();
 
@@ -30,12 +34,21 @@ export const createUserService = async (req: Request, res: Response) => {
 
     try {
         let user = await auth.createUser(newUser);
+=======
+        await auth.createUser(newUser);
         await sendVerificationMail(
             newUser.firstName,
             newUser.email,
             newUser.verificationCode
         );
         return user
+=======
+        return res
+            .status(201)
+            .json({
+                message: "Check your email for confirmation code",
+                newUser,
+            });
     } catch (error) {
         res.status(400).json(error);
     }
@@ -60,6 +73,23 @@ export const loginService = async (req: Request, res: Response) => {
     const user = await auth.loginUser(req.body.email);
     
     if (!user) return res.status(404).json({ message: "User Not found." });
+    const user = await User.findOne({
+        verificationCode: req.body.verificationCode,
+    });
+    if (!user) return res.status(404).send({ message: "User Not found." });
+
+    user.active = true;
+    await auth.createUser(user);
+    res.status(200).send("Email verified! Close this tab and login");
+};
+
+export const loginService = async (req: Request, res: Response) => {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) return res.status(404).json({ message: "User Not found." });
+
+    const vp = bcrypt.compareSync(req.body.password, user.password);
+
+    if (!vp) return res.status(400).json({ error: "Invalid credentials" });
 
     const vp = bcrypt.compareSync(req.body.password, user.password);
     if (!vp) {
@@ -75,4 +105,4 @@ export const loginService = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(400).json(error);
     }
-};
+
