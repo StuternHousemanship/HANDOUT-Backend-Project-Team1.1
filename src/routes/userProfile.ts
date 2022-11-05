@@ -8,9 +8,9 @@ editUserPassword
 } from  '../Controllers/ProfileController/profile'
 
 
-router.get('/showMe', verifyToken,  CurrentUser);
+router.get('/getSingleUser/:id', verifyToken,  CurrentUser);
 router.patch('/updateUser', verifyToken, editUser);
- router.patch('/updateUserPassword',verifyToken, editUserPassword);
+ router.patch('/updateUserPassword/:id',verifyToken, editUserPassword);
 
 
 

@@ -1,21 +1,16 @@
 import { Request, Response } from "express";
-import User from "../../models/userModel";
 const { StatusCodes } = require('http-status-codes');
+import { AuthRepository } from "../../Repository/Auth";
+const auth = new AuthRepository();
 
-import { error } from "console";
-import UserType from "../../interfaces/userType";
-
-const TOKEN_SECRET = String(process.env.TOKEN_SECRET);
 
 
 const updateUser = async (req:Request, res:Response) => {
     try {
-        const userID = req.body.authUser.user._id
-        const user = await User.findOne({_id: userID})
+        const user = await auth.userEdited(req.body.email)
          partialUpdate(user, req.body)
        await user.save()
-        user.password= ' ';
-        res.json(user)
+        return user
     } catch (error) {
         res.status(400).json(error);
     }

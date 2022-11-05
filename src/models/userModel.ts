@@ -1,9 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 import UserType from "../interfaces/userType";
-import validator from 'validator';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { NextFunction } from "express";
+
 
 const TOKEN_SECRET = String(process.env.TOKEN_SECRET);
 const userSchema = new Schema<UserType>(
@@ -15,7 +12,7 @@ const userSchema = new Schema<UserType>(
         password: { type: String, required: true},
         active: { type: Boolean, required: true },
         verificationCode: { type: String, required: true, unique: true, select:false },
-        location: {type:String, trim: true, maxlength: 20, default: 'my city',}
+        location: {type:String, trim: true, maxlength: 20, default: 'my city'},
     },
     { timestamps: true }
 );

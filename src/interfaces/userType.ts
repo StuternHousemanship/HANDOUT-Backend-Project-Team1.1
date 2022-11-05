@@ -1,5 +1,5 @@
 type UserType =  {
-    userId:string;
+    userId?:string;
     firstName: string;
     lastName: string;
     email: string;
@@ -7,7 +7,7 @@ type UserType =  {
     password: string;
     active: boolean;
     verificationCode: string;
-    location: string;
+    location?: string;
 };
 
 

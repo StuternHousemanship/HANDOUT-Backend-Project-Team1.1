@@ -4,10 +4,10 @@ import { generateCode } from "../../services/generateCode";
 import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
 import User from "../../models/userModel";
-import { findUser } from "../userExists";
 
 import jwt from "jsonwebtoken";
 import { sendVerificationMail } from "../sendGrid";
+import UserType from "../../interfaces/userType";
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ const auth = new AuthRepository();
 export const createUserService = async (req: Request, res: Response) => {
     const code = generateCode();
 
-    const newUser = new User({
+    const newUser:UserType = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
@@ -25,40 +25,35 @@ export const createUserService = async (req: Request, res: Response) => {
         password: bcrypt.hashSync(req.body.password, 8),
         active: false,
         verificationCode: code,
-    });
-
-    const isUserExist = await User.findOne({ email: newUser.email });
+    };
+    const isUserExist = await auth.checkUserExist (req.body.email);
     if (isUserExist) return res.status(400).json("User already exists");
 
     try {
-        await auth.createUser(newUser);
+        let user = await auth.createUser(newUser);
         await sendVerificationMail(
             newUser.firstName,
             newUser.email,
             newUser.verificationCode
         );
-        return res
-            .status(201)
-            .json({
-                message: "Check your email for confirmation code",
-                newUser,
-            });
+        return user
     } catch (error) {
         res.status(400).json(error);
     }
 };
 
 export const verifyEmailService = async (req: Request, res: Response) => {
-    const user = await User.findOne({
-        verificationCode: req.body.verificationCode,
-    }).select('+verificationCode');
+    const user = await auth.createUserEmail(req.body.verificationCode);
     if (!user) return res.status(404).send({ message: "User Not found." });
+try {
+   user.active = true;
+    await auth.createUser(user); 
+    return user
+} catch (error) {
+    res.status(400).json(error)
+}
 
-    user.active = true;
-    await auth.createUser(user);
-    res.status(200).send("Email verified! Close this tab and login");
 };
-
 
 
 export const loginService = async (req: Request, res: Response) => {
