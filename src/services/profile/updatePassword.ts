@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import User from '../../models/userModel';
 import bcrypt from "bcrypt"
 import{ BadRequestError, NotFoundError, UnAuthenticatedError } from '../../errors';
 
@@ -8,14 +7,12 @@ const auth = new AuthRepository();
 
 const updateUserPassword = async (req:Request, res:Response) => {
     const { oldPassword, newPassword } = req.body;
+    
     if (!oldPassword || !newPassword) {
       throw new BadRequestError('Please provide both values');
     }
-  
-    const userId: string  = req.body.authUser.user._id;
-console.log(userId);
 
-    const user = await User.findOne({ _id: userId }).select('+password');
+    const user = await auth.editedPassword(req.body.authUser.user._id);
   
     const isPasswordCorrect = await comparePassword(user.password, oldPassword);
     if (!isPasswordCorrect) {

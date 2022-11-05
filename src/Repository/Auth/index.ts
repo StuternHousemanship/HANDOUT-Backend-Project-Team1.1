@@ -18,8 +18,9 @@ export class AuthRepository {
             return  user
     }
     public async loginUser (email:string): Promise<any>{
-        const  user = await User.findOne({ email });
-            return !! user
+        const  user = await User.findOne({email});
+        if (!user) return null
+            return  user
     }
     public async getUser (userId:string): Promise<any>{
       const user = await User.findById(userId)
@@ -36,7 +37,7 @@ export class AuthRepository {
     }
 
     public async editedPassword(userId:string): Promise<any>{
-        const user = await User.findById({ userId}).select('+password');
+        const user = await User.findById(userId).select('+password');
       return  user
     }
 }

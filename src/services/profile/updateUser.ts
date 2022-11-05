@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-const { StatusCodes } = require('http-status-codes');
 import { AuthRepository } from "../../Repository/Auth";
 const auth = new AuthRepository();
 

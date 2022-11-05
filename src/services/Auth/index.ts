@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { generateCode } from "../../services/generateCode";
 import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
-import User from "../../models/userModel";
 
 import jwt from "jsonwebtoken";
 import { sendVerificationMail } from "../sendGrid";
@@ -57,7 +56,9 @@ try {
 
 
 export const loginService = async (req: Request, res: Response) => {
-    const user = await User.findOne({ email: req.body.email });
+    
+    const user = await auth.loginUser(req.body.email);
+    
     if (!user) return res.status(404).json({ message: "User Not found." });
 
     const vp = bcrypt.compareSync(req.body.password, user.password);
@@ -70,7 +71,7 @@ export const loginService = async (req: Request, res: Response) => {
             expiresIn: "2h",
         });
         res.cookie("handout_token", token);
-        res.status(200).json({ message: "Login Succesful", token });
+        return token;
     } catch (error) {
         res.status(400).json(error);
     }

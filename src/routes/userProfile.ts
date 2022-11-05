@@ -10,7 +10,7 @@ editUserPassword
 
 router.get('/getSingleUser/:id', verifyToken,  CurrentUser);
 router.patch('/updateUser', verifyToken, editUser);
- router.patch('/updateUserPassword/:id',verifyToken, editUserPassword);
+ router.patch('/updateUserPassword',verifyToken, editUserPassword);
 
 
 

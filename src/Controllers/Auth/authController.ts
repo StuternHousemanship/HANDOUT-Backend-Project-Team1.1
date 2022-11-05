@@ -19,6 +19,6 @@ export const verifyUserEmail = async (req: Request, res: Response) => {
 };
 
 export const authenticate = async (req: Request, res: Response) => {
-    await loginService(req, res);
-    
+   let token =  await loginService(req, res);
+    return res.status(200).json({ message: "Login Succesful", token });
 };
