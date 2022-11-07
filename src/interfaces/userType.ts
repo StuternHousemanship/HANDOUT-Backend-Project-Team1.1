@@ -1,4 +1,5 @@
-type UserType = {
+type UserType =  {
+    userId?:string;
     firstName: string;
     lastName: string;
     email: string;
@@ -6,6 +7,9 @@ type UserType = {
     password: string;
     active: boolean;
     verificationCode: string;
+    location?: string;
 };
+
+
 
 export default UserType
