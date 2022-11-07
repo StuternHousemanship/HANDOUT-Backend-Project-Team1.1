@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
 import User from "../../models/userModel";
 import jwt from "jsonwebtoken";
-import {tokens} from '../../models/tokenModel';
+import {tokens} from '../../models/tokenModel'
 import { sendVerificationMail} from "../sendGrid";
 
 dotenv.config();
@@ -84,7 +84,6 @@ export const loginService = async (req: Request, res: Response) => {
 };
 
 export const resetPasswordService = async (req: Request, res: Response) => {
- 
     try {
       const user = await User.findOne(req.body.userId);
       if (!user)
