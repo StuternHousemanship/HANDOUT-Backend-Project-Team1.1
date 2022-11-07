@@ -63,3 +63,6 @@ export const sendForgotpassword = async (
         console.error(error)
       }
   }
+=======
+    };
+>>>>>>> bfb06b05db7866af83cfec0dec29b9b91d6de3b9

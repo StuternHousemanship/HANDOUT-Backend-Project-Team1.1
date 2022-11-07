@@ -1,8 +1,9 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv'
 import database from "./config/database";
 import { authRoute } from "./routes/authRoutes";
+import userRouter from './routes/userProfile';
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 
@@ -39,6 +40,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 authRoute(app);
+app.use("/", userRouter)
+
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.get("/", (req: Request, res: Response) => {
