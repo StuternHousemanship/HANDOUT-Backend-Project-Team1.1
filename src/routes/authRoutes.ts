@@ -3,7 +3,7 @@ import {
     authenticate,
     create,
     verifyUserEmail,
-    resetPass
+    forgotpassword
 } from "../Controllers/Auth/authController";
 
 /**
@@ -159,7 +159,7 @@ export const authRoute = (app: Application) => {
      *                    example: Pass1234#
      */
     app.post("/auth/login", authenticate);
-    app.post("/auth/resetpassword", resetPass);
+    app.post("/auth/forgotpassword", forgotpassword);
 };
 
 export default authRoute;

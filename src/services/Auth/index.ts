@@ -3,17 +3,12 @@ import { Request, Response } from "express";
 import { generateCode } from "../../services/generateCode";
 import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
-<<<<<<< HEAD
-import User from "../../models/userModel";
 import jwt from "jsonwebtoken";
-import {tokens} from '../../models/tokenModel'
-import { sendVerificationMail} from "../sendGrid";
-=======
-
-import jwt from "jsonwebtoken";
-import { sendVerificationMail } from "../sendGrid";
+import { sendVerificationMail, sendForgotpassword } from "../sendGrid";
 import UserType from "../../interfaces/userType";
->>>>>>> bfb06b05db7866af83cfec0dec29b9b91d6de3b9
+import {digitalCode} from "../digitalCode";
+import TokenType from "../../interfaces/tokenType";
+import {tokens} from "../../models/tokenModel"
 
 dotenv.config();
 
@@ -36,7 +31,7 @@ export const createUserService = async (req: Request, res: Response) => {
     if (isUserExist) return res.status(400).json("User already exists");
 
     try {
-        let user = await new AuthRepository().createUser(newUser);
+        const user = await new AuthRepository().createUser(newUser);
         await sendVerificationMail(
             newUser.firstName,
             newUser.email,
@@ -82,43 +77,32 @@ export const loginService = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(400).json(error);
     }
-<<<<<<< HEAD
-};
+}
 
-export const resetPasswordService = async (req: Request, res: Response) => {
-    try {
-      const user = await User.findOne(req.body.userId);
-      if (!user)
-        return res.json({
-          status: 400,
-          error: "invalid user or expired",
-        });
-       console.log(user)
-      const token = await tokens.findOne({
-        userId: user.id,
-        token: req.body.token,
-      });
-      if (!token)
-        return res.json({
-          status: 400,
-          error: "invalid link or expired",
-        });  
-      user.password = req.body.password;
-      await user.save();
-      await token.delete();
+export const forgotPasswordService = async (req: Request, res: Response) => {
+  const code = digitalCode()
   
-      return res.json({
-        status: 200,
-        error: "password reset successfully",
-      });
-    } catch (error) {
-      res.json({
-        status: 400,
-        error: "something went wrong",
-      });
-    }
-};
+  try {
+  
+    const user = await new AuthRepository().forgotpassword(req.body.email);
+    if (!user) return res.status(400).json({message:"Email not found"});
+    console.log("Emmanuel", user)
 
-=======
-};
->>>>>>> bfb06b05db7866af83cfec0dec29b9b91d6de3b9
+    let token = await new AuthRepository().userID(req.body.userId)
+      if (!token) {
+        token = await new tokens({
+          userId: user.id,
+          token: code
+        }).save()
+      }
+   
+    await sendForgotpassword("User", req.body.email, code)
+    
+
+
+  } catch (err) {
+    return err
+  }
+
+    
+}

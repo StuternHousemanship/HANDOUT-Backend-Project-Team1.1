@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from "bcrypt"
-import{ BadRequestError, NotFoundError, UnAuthenticatedError } from '../../errors';
+import{ BadRequestError, UnAuthenticatedError } from '../../errors';
 
 import { AuthRepository } from '../../Repository/Auth';
 new AuthRepository();

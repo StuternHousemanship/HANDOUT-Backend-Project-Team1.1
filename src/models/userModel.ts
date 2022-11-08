@@ -2,7 +2,6 @@ import mongoose, { Schema } from "mongoose";
 import UserType from "../interfaces/userType";
 
 
-const TOKEN_SECRET = String(process.env.TOKEN_SECRET);
 const userSchema = new Schema<UserType>(
 
     {

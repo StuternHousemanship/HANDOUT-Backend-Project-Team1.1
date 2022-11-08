@@ -1,6 +1,6 @@
 import UserType from "../../interfaces/userType";
 import User from "../../models/userModel";
-import bcrypt from "bcrypt"
+import { tokens } from "../../models/tokenModel";
 
 export class AuthRepository {
     async createUser(user: UserType) {
@@ -40,7 +40,23 @@ export class AuthRepository {
         const user = await User.findById(userId).select('+password');
       return  user
     }
-}
+
+    public async forgotpassword(email: string): Promise<any> {
+       const user = await User.findOne({email})
+       if (!user) return null
+            return  user
+    }
+    public async userID (userId: number): Promise<any>{
+        const userOne = await tokens.findById(userId)
+        if (!userOne) return null
+        return userOne
+    }
+    public async findtokens (token: string): Promise<any> {
+      const userOne = await tokens.findById(token)
+      if (!userOne) return null
+      return userOne
+  }
+  }
 
 
 
