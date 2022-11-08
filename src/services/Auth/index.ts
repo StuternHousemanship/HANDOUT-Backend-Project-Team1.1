@@ -109,8 +109,7 @@ try {
       });
      console.log(user)
     const token = await new AuthRepository().findtokens(
-        req.body.user._id,
-        req.body.token
+        req.body.user._idreq.body.token
     );
     if (!token)
       return res.json({

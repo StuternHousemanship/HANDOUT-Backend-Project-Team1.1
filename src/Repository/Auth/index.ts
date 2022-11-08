@@ -51,8 +51,8 @@ export class AuthRepository {
     if (!userOne) return null;
     return userOne;
   }
-  public async findtokens(userId: number, token: string): Promise<any> {
-    const userOne = await tokens.findOne({ userId, token });
+  public async findtokens(token: string): Promise<any> {
+    const userOne = await tokens.findOne({ token });
     if (!userOne) return null;
     return userOne;
   }
