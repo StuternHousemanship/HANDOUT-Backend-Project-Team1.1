@@ -159,7 +159,7 @@ export const authRoute = (app: Application) => {
      *                    example: Pass1234#
      */
     app.post("/auth/login", authenticate);
-    app.post("/auth/logout", logout);
+    app.get("/auth/logout", logout);
 };
 
 export default authRoute;

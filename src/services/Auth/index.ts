@@ -80,8 +80,9 @@ export const loginService = async (req: Request, res: Response) => {
 
 
 export const logoutService = async (req: Request, res: Response) => {
- 
-  const logout = res.clearCookie('token')
+   
+  const logout = await res.clearCookie('token')
+  
   if(!logout) {
     return res.status(400).json({
       status: 'error'
