@@ -88,9 +88,8 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
     
       const user = await new AuthRepository().forgotpassword(req.body.email);
       if (!user) return res.status(400).json({message:"Email not found"});
-      console.log("Emmanuel", user)
   
-      let token = await new AuthRepository().userID(req.body.userId)
+      let token = await new AuthRepository().userID(req.body.userID)
         if (!token) {
           token = await new tokens({
             userId: user.id,
