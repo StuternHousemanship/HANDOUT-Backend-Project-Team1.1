@@ -28,4 +28,3 @@ export const logout = async (req: Request, res: Response) => {
     await logoutService(req, res);
     return res.status(200).json({message: "logged out successfully"})
 };
-
