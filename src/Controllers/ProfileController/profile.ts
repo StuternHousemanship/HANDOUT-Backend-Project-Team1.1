@@ -4,12 +4,12 @@ import  { viewCurrentUser, updateUser, updateUserPassword} from "../../services/
 
 
 export const CurrentUser = async (req:Request, res: Response) => {
- let user= await viewCurrentUser(req, res);
+ const user= await viewCurrentUser(req, res);
  res.status(StatusCodes.OK).json(user)
 }
 
 export const editUser = async (req: Request, res: Response) => {
- let editedProfile = await updateUser(req, res);
+ const editedProfile = await updateUser(req, res);
   res.status(StatusCodes.OK).json(editedProfile);  
 }
 

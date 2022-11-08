@@ -3,6 +3,7 @@ import {
     authenticate,
     create,
     verifyUserEmail,
+    logout
 } from "../Controllers/Auth/authController";
 
 /**
@@ -89,6 +90,7 @@ export const authRoute = (app: Application) => {
      *                    example: Pass1234#
      */
     app.post("/auth/signup", create);
+   
 
     /**
      * @swagger
@@ -157,6 +159,7 @@ export const authRoute = (app: Application) => {
      *                    example: Pass1234#
      */
     app.post("/auth/login", authenticate);
+    app.get("/auth/logout", logout);
 };
 
 export default authRoute;

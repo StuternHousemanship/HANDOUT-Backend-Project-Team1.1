@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import { createUserService, loginService, verifyEmailService } from "../../services/Auth";
+import { createUserService, loginService, verifyEmailService, logoutService} from "../../services/Auth";
+
 
 
 
 export const create = async (req: Request, res: Response) => {
-    let newUser =  await createUserService(req, res);
+    const newUser =  await createUserService(req, res);
     return res
     .status(201)
     .json({
@@ -19,6 +20,11 @@ export const verifyUserEmail = async (req: Request, res: Response) => {
 };
 
 export const authenticate = async (req: Request, res: Response) => {
-   let token =  await loginService(req, res);
+   const token =  await loginService(req, res);
     return res.status(200).json({ message: "Login Succesful", token });
+};
+
+export const logout = async (req: Request, res: Response) => {
+    await logoutService(req, res);
+    return res.status(200).json({message: "logged out successfully"})
 };

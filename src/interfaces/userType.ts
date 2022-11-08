@@ -1,3 +1,4 @@
+
 type UserType =  {
     userId?:string;
     firstName: string;
