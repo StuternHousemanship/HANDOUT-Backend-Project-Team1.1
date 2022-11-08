@@ -4,10 +4,13 @@ import { generateCode } from "../../services/generateCode";
 import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
 import jwt from "jsonwebtoken";
-import { sendVerificationMail, sendForgotpassword } from "../sendGrid";
+import { sendVerificationMail,sendForgotpassword} from "../sendGrid";
 import UserType from "../../interfaces/userType";
-import {digitalCode} from "../digitalCode";
+import {digitalCode} from "../digitalCode"
 import {tokens} from "../../models/tokenModel"
+
+
+
 
 dotenv.config();
 
@@ -79,27 +82,59 @@ export const loginService = async (req: Request, res: Response) => {
 }
 
 export const forgotPasswordService = async (req: Request, res: Response) => {
-  const code = digitalCode()
-  
-  try {
-  
-    const user = await new AuthRepository().forgotpassword(req.body.email);
-    if (!user) return res.status(400).json({message:"Email not found"});
-    console.log("Emmanuel", user)
-
-    let token = await new AuthRepository().userID(req.body.userId)
-      if (!token) {
-        token = await new tokens({
-          userId: user.id,
-          token: code
-        }).save()
-      }
-   
-    await sendForgotpassword("User", req.body.email, code)
+    const code = digitalCode()
     
-  } catch (err) {
-    return err
+    try {
+    
+      const user = await new AuthRepository().forgotpassword(req.body.email);
+      if (!user) return res.status(400).json({message:"Email not found"});
+      console.log("Emmanuel", user)
+  
+      let token = await new AuthRepository().userID(req.body.userId)
+        if (!token) {
+          token = await new tokens({
+            userId: user.id,
+            token: code
+          }).save()
+        }
+     
+      await sendForgotpassword("User", req.body.email, code)
+      
+    } catch (err) {
+      return err
+    }
+  
+      
   }
 
-    
+export const resetpasswordService = async (req: Request, res: Response) => {
+    try {
+        const user = await new AuthRepository().userID(req.body.userId)
+        if (!user)
+        return res.json({
+            status: 400,
+            error: "invalid user or expired",
+        })
+        console.log("emmanuel",user)
+
+        const token = await new AuthRepository().findtokens(
+         req.body.token
+        )
+
+        if(!token)
+        return res.json({
+            status: 400,
+            error: "invalid link or expired",
+        })
+
+        user.password = req.body.password;
+        await user.save();
+        await token.delete();
+
+    } catch (err) {
+        res.json({
+            status: 400,
+            error: "something went wrong",
+          });
+    }
 }
