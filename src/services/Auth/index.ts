@@ -8,7 +8,6 @@ import { sendVerificationMail,sendForgotpassword} from "../sendGrid";
 import UserType from "../../interfaces/userType";
 import {digitalCode} from "../digitalCode"
 import {tokens} from "../../models/tokenModel"
-import UserType from "../../interfaces/userType";
 
 
 
