@@ -99,12 +99,37 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
 };
 
 export const resetpasswordService = async (req: Request, res: Response) => {
-  try {
-        const user = await new AuthRepository().userID()
-  } catch (err) {
+
+try {
+    const user = await new AuthRepository().userID(req.body.user._id);
+    if (!user)
+      return res.json({
+        status: 400,
+        error: "invalid user or expired",
+      });
+     console.log(user)
+    const token = await new AuthRepository().findtokens(
+        req.body.user._id,
+        req.body.token
+    );
+    if (!token)
+      return res.json({
+        status: 400,
+        error: "invalid link or expired",
+      });  
+    user.password = req.body.password;
+    await user.save();
+    await token.delete();
+
+    return res.json({
+      status: 200,
+      success: "password reset successfully",
+    });
+  } catch (error) {
     res.json({
       status: 400,
       error: "something went wrong",
     });
   }
 };
+
