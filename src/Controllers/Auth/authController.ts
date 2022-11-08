@@ -27,7 +27,7 @@ export const authenticate = async (req: Request, res: Response) => {
 
 export const resetpassword = async (req: Request, res: Response) => {
   await resetpasswordService(req, res);
-  return res.status(200).json({ message: "password updated successfully" });
+  // return res.status(200).json({ message: "password updated successfully" });
 };
 export const forgotpassword = async (req: Request, res: Response) => {
   await forgotPasswordService(req, res);

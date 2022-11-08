@@ -100,28 +100,7 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
 
 export const resetpasswordService = async (req: Request, res: Response) => {
   try {
-    const userOne = await new AuthRepository().userID(req.body.user._id);
-    // if (!userOne)
-    //   return res.json({
-    //     status: 400,
-    //     error: "invalid user or expired",
-    //   });
-    console.log("emmanuel", userOne);
-
-    // const token = await new AuthRepository().findtokens(
-    //   req.body.userId,
-    //   req.body.token
-    // );
-
-    // if (!token)
-    //   return res.json({
-    //     status: 400,
-    //     error: "invalid link or expired",
-    //   });
-
-    // userOne.password = req.body.password;
-    // await userOne.save();
-    // await token.delete();
+        const user = await new AuthRepository().userID()
   } catch (err) {
     res.json({
       status: 400,
