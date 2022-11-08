@@ -56,7 +56,7 @@ export class AuthRepository {
       if (!userOne) return null
       return userOne
   }
-  }
+}
 
 
 

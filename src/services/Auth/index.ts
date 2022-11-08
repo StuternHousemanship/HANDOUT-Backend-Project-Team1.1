@@ -8,7 +8,7 @@ import { sendVerificationMail,sendForgotpassword} from "../sendGrid";
 import UserType from "../../interfaces/userType";
 import {digitalCode} from "../digitalCode"
 import {tokens} from "../../models/tokenModel"
-
+import UserType from "../../interfaces/userType";
 
 
 
@@ -52,7 +52,7 @@ try {
    user.active = true;
     await new AuthRepository().createUser(user); 
     return user
-} catch (error) {
+  } catch (error) {
     res.status(400).json(error)
 }
 
@@ -104,6 +104,17 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
       return err
     }
   
-      
-  }
+}
 
+export const logoutService = async (req: Request, res: Response) => {
+   
+  const logout = await res.clearCookie('token')
+  
+  if(!logout) {
+    return res.status(400).json({
+      status: 'error'
+    })
+  } else {
+    return logout
+  }
+}
