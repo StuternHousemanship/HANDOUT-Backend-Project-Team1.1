@@ -88,11 +88,12 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
     
       const user = await new AuthRepository().forgotpassword(req.body.email);
       if (!user) return res.status(400).json({message:"Email not found"});
+      
   
-      let token = await new AuthRepository().userID(req.body.userID)
+      let token = await new AuthRepository().userID(user._id)
         if (!token) {
           token = await new tokens({
-            userId: user.id,
+            userId: user._id,
             token: code
           }).save()
         }
@@ -106,34 +107,3 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
       
   }
 
-export const resetpasswordService = async (req: Request, res: Response) => {
-    try {
-        const user = await new AuthRepository().userID(req.body.userId)
-        if (!user)
-        return res.json({
-            status: 400,
-            error: "invalid user or expired",
-        })
-        console.log("emmanuel",user)
-
-        const token = await new AuthRepository().findtokens(
-         req.body.token
-        )
-
-        if(!token)
-        return res.json({
-            status: 400,
-            error: "invalid link or expired",
-        })
-
-        user.password = req.body.password;
-        await user.save();
-        await token.delete();
-
-    } catch (err) {
-        res.json({
-            status: 400,
-            error: "something went wrong",
-          });
-    }
-}
