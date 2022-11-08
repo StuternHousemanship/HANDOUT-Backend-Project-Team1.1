@@ -1,9 +1,10 @@
 import { Application } from "express";
+import { log } from "util";
 import {
     authenticate,
     create,
     verifyUserEmail,
-    forgotpassword
+    logout
 } from "../Controllers/Auth/authController";
 
 /**
@@ -159,7 +160,7 @@ export const authRoute = (app: Application) => {
      *                    example: Pass1234#
      */
     app.post("/auth/login", authenticate);
-    app.post("/auth/forgotpassword", forgotpassword);
+    app.post("/auth/logout", logout);
 };
 
 export default authRoute;

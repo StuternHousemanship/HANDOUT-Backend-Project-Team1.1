@@ -4,11 +4,10 @@ import { generateCode } from "../../services/generateCode";
 import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
 import jwt from "jsonwebtoken";
-import { sendVerificationMail, sendForgotpassword } from "../sendGrid";
+import { sendVerificationMail} from "../sendGrid";
 import UserType from "../../interfaces/userType";
-import {digitalCode} from "../digitalCode";
-import TokenType from "../../interfaces/tokenType";
-import {tokens} from "../../models/tokenModel"
+
+
 
 dotenv.config();
 
@@ -79,30 +78,15 @@ export const loginService = async (req: Request, res: Response) => {
     }
 }
 
-export const forgotPasswordService = async (req: Request, res: Response) => {
-  const code = digitalCode()
-  
-  try {
-  
-    const user = await new AuthRepository().forgotpassword(req.body.email);
-    if (!user) return res.status(400).json({message:"Email not found"});
-    console.log("Emmanuel", user)
 
-    let token = await new AuthRepository().userID(req.body.userId)
-      if (!token) {
-        token = await new tokens({
-          userId: user.id,
-          token: code
-        }).save()
-      }
-   
-    await sendForgotpassword("User", req.body.email, code)
-    
-
-
-  } catch (err) {
-    return err
+export const logoutService = async (req: Request, res: Response) => {
+ 
+  const logout = res.clearCookie('token')
+  if(!logout) {
+    return res.status(400).json({
+      status: 'error'
+    })
+  } else {
+    res.redirect('/')
   }
-
-    
 }

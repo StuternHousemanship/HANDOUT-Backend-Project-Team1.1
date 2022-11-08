@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { createUserService, loginService, verifyEmailService, forgotPasswordService } from "../../services/Auth";
+import { createUserService, loginService, verifyEmailService, logoutService} from "../../services/Auth";
 
 
 
@@ -24,8 +24,8 @@ export const authenticate = async (req: Request, res: Response) => {
     return res.status(200).json({ message: "Login Succesful", token });
 };
 
-export const forgotpassword = async (req: Request, res: Response) => {
-    await forgotPasswordService(req, res);
-    return res.status(200).json({message: "password reset link sent to your email account"})
+export const logout = async (req: Request, res: Response) => {
+    await logoutService(req, res);
+    return res.status(200).json({message: "logged out successfully"})
 };
 
