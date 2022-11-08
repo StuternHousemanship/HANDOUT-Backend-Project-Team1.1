@@ -1,6 +1,6 @@
 import UserType from "../../interfaces/userType";
 import User from "../../models/userModel";
-import bcrypt from "bcrypt"
+import { tokens } from "../../models/tokenModel";
 
 export class AuthRepository {
     async createUser(user: UserType) {
@@ -24,14 +24,14 @@ export class AuthRepository {
     }
     public async getUser (userId:string): Promise<any>{
       const user = await User.findById(userId)
-      user.password= ' ';
+      user.password = ' ';
        if (!user) return null
       return  user
     }
     public async userEdited (email:string): Promise<any>{
         const user = await User.findOne({email})
-      user.password= ' ';
-      user.password= ' ';
+      user.password = ' ';
+      user.password = ' ';
        if (!user) return null
       return  user
     }
@@ -40,7 +40,7 @@ export class AuthRepository {
         const user = await User.findById(userId).select('+password');
       return  user
     }
-}
+  }
 
 
 

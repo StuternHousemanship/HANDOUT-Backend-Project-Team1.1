@@ -2,8 +2,8 @@ import express from 'express'
 const router = express.Router();
 import {verifyToken} from "../middleware/auth"
 import{
-  CurrentUser,
- editUser,
+CurrentUser,
+editUser,
 editUserPassword
 } from  '../Controllers/ProfileController/profile';
 
@@ -201,6 +201,7 @@ router.patch('/updateUser', verifyToken, editUser);
      *                    type: string
      *                    example: test1234
      */
+router.patch('/updateUserPassword',verifyToken, editUserPassword);
 
 
 export default router;

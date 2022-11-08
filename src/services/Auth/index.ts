@@ -3,10 +3,11 @@ import { Request, Response } from "express";
 import { generateCode } from "../../services/generateCode";
 import bcrypt from "bcrypt";
 import { AuthRepository } from "../../Repository/Auth";
-
 import jwt from "jsonwebtoken";
-import { sendVerificationMail } from "../sendGrid";
+import { sendVerificationMail} from "../sendGrid";
 import UserType from "../../interfaces/userType";
+
+
 
 dotenv.config();
 
@@ -29,7 +30,7 @@ export const createUserService = async (req: Request, res: Response) => {
     if (isUserExist) return res.status(400).json("User already exists");
 
     try {
-        let user = await new AuthRepository().createUser(newUser);
+        const user = await new AuthRepository().createUser(newUser);
         await sendVerificationMail(
             newUser.firstName,
             newUser.email,
@@ -75,4 +76,18 @@ export const loginService = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(400).json(error);
     }
-};
+}
+
+
+export const logoutService = async (req: Request, res: Response) => {
+   
+  const logout = await res.clearCookie('token')
+  
+  if(!logout) {
+    return res.status(400).json({
+      status: 'error'
+    })
+  } else {
+    return logout
+  }
+}
