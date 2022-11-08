@@ -7,7 +7,6 @@ import jwt from "jsonwebtoken";
 import { sendVerificationMail, sendForgotpassword } from "../sendGrid";
 import UserType from "../../interfaces/userType";
 import {digitalCode} from "../digitalCode";
-import TokenType from "../../interfaces/tokenType";
 import {tokens} from "../../models/tokenModel"
 
 dotenv.config();
@@ -98,8 +97,6 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
    
     await sendForgotpassword("User", req.body.email, code)
     
-
-
   } catch (err) {
     return err
   }
