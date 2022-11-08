@@ -1,11 +1,11 @@
-import express from 'express'
+import express from "express";
 const router = express.Router();
-import {verifyToken} from "../middleware/auth"
-import{
-CurrentUser,
-editUser,
-editUserPassword
-} from  '../Controllers/ProfileController/profile';
+import { verifyToken } from "../middleware/auth";
+import {
+  CurrentUser,
+  editUser,
+  editUserPassword,
+} from "../Controllers/ProfileController/profile";
 
 /**
  * @swagger
@@ -53,155 +53,153 @@ editUserPassword
  *         location: my city
  */
 
-
-router.get('/getSingleUser/:id', verifyToken,  CurrentUser);
+router.get("/getSingleUser/:id", verifyToken, CurrentUser);
 /**
-     * @swagger
-     * /getSingleUser/{id}:
-     *    get:
-     *        description: This API is for getting user Profile
-     *        tags: []
-     *        operationID: 
-     *           - name: id
-     *             in: path
-     *             description: User ID
-     *             required: true
-     *             schema: 
-     *              type: string
-     *           - name: X-handout_token
-     *             in: header
-     *             description: an authorization header
-     *             required: true
-     *             schema: 
-     *              type: string
-     *        responses:
-     *           '200':
-     *              description: Successful
-     *              content:
-     *                application/json:
-     *                   schema:
-     *                     $ref: 'components/schemas/Profile'
-     *           400:
-     *              description: Error
-     *        components:
-     *          schemas:
-     *            Profile:
-     *                type: object
-     *                properties:
-     *                   id:
-     *                     type:string 
-     *                   firstName:
-     *                     type:string 
-     *                   lastName:
-     *                     type:string 
-     *                   email:
-     *                     type:string 
-     *                   mobile:
-     *                     type:string 
-     *                   location:
-     *                     type:string 
-     */
-router.patch('/updateUser', verifyToken, editUser);
+ * @swagger
+ * /getSingleUser/{id}:
+ *    get:
+ *        description: This API is for getting user Profile
+ *        tags: []
+ *        operationID:
+ *           - name: id
+ *             in: path
+ *             description: User ID
+ *             required: true
+ *             schema:
+ *              type: string
+ *           - name: X-handout_token
+ *             in: header
+ *             description: an authorization header
+ *             required: true
+ *             schema:
+ *              type: string
+ *        responses:
+ *           '200':
+ *              description: Successful
+ *              content:
+ *                application/json:
+ *                   schema:
+ *                     $ref: 'components/schemas/Profile'
+ *           400:
+ *              description: Error
+ *        components:
+ *          schemas:
+ *            Profile:
+ *                type: object
+ *                properties:
+ *                   id:
+ *                     type:string
+ *                   firstName:
+ *                     type:string
+ *                   lastName:
+ *                     type:string
+ *                   email:
+ *                     type:string
+ *                   mobile:
+ *                     type:string
+ *                   location:
+ *                     type:string
+ */
+router.patch("/updateUser", verifyToken, editUser);
 /**
-     * @swagger
-     * /updateUser:
-     *    patch:
-     *        description: This API is for getting user Profile
-     *        tags: []
-     *        operationID: 
-     *           - name: X-handout_token
-     *             in: header
-     *             description: an authorization header
-     *             required: true
-     *             schema: 
-     *              type: string
-     *        consumes:
-     *        - application/json
-     *        produces:
-     *        - application/json
-     *        requestBody:
-     *          content:
-     *            application/json:
-     *              schema:
-     *                $ref: '#/definitions/editUserProfile'
-     *        responses:
-     *           200:
-     *              description: user profile updated
-     *           400:
-     *              description: Error
-     * definitions:
-     *     editUserProfile:
-     *        type: object
-     *        required:
-     *        - firstName
-     *        - lastName
-     *        - email
-     *        - mobile
-     *        - password
-     *        - location
-     *        properties:
-     *            firstName:
-     *                    type: string
-     *                    example: mavel
-     *            lastName:
-     *                    type: string
-     *                    example: stone
-     *            email:
-     *                    type: string
-     *                    example: rite@gmail.com
-     *            mobile:
-     *                    type: string
-     *                    example: 99999923
-     *            password:
-     *                    type: string
-     *                    example: test123
-     *            location:
-     *                    type: string
-     *                    example: my city
-     */
- router.patch('/updateUserPassword',verifyToken, editUserPassword);
+ * @swagger
+ * /updateUser:
+ *    patch:
+ *        description: This API is for getting user Profile
+ *        tags: []
+ *        operationID:
+ *           - name: X-handout_token
+ *             in: header
+ *             description: an authorization header
+ *             required: true
+ *             schema:
+ *              type: string
+ *        consumes:
+ *        - application/json
+ *        produces:
+ *        - application/json
+ *        requestBody:
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/definitions/editUserProfile'
+ *        responses:
+ *           200:
+ *              description: user profile updated
+ *           400:
+ *              description: Error
+ * definitions:
+ *     editUserProfile:
+ *        type: object
+ *        required:
+ *        - firstName
+ *        - lastName
+ *        - email
+ *        - mobile
+ *        - password
+ *        - location
+ *        properties:
+ *            firstName:
+ *                    type: string
+ *                    example: mavel
+ *            lastName:
+ *                    type: string
+ *                    example: stone
+ *            email:
+ *                    type: string
+ *                    example: rite@gmail.com
+ *            mobile:
+ *                    type: string
+ *                    example: 99999923
+ *            password:
+ *                    type: string
+ *                    example: test123
+ *            location:
+ *                    type: string
+ *                    example: my city
+ */
+router.patch("/updateUserPassword", verifyToken, editUserPassword);
 /**
-     * @swagger
-     * /updateUserPassword:
-     *    patch:
-     *        description: This API is for update users password
-     *        tags: []
-     *        operationID: 
-     *           - name: X-handout_token
-     *             in: header
-     *             description: an authorization header
-     *             required: true
-     *             schema: 
-     *              type: string
-     *        consumes:
-     *        - application/json
-     *        produces:
-     *        - application/json
-     *        requestBody:
-     *          content:
-     *            application/json:
-     *              schema:
-     *                $ref: '#/definitions/userProfile'
-     *        responses:
-     *           201:
-     *              description: Success! Password Updated
-     *           400:
-     *              description: Error
-     * definitions:
-     *     userProfile:
-     *        type: object
-     *        required:
-     *        - oldPassword
-     *        - newPassword
-     *        properties:
-     *            oldPassword:
-     *                    type: string
-     *                    example: test12
-     *            newPassword:
-     *                    type: string
-     *                    example: test1234
-     */
-router.patch('/updateUserPassword',verifyToken, editUserPassword);
-
+ * @swagger
+ * /updateUserPassword:
+ *    patch:
+ *        description: This API is for update users password
+ *        tags: []
+ *        operationID:
+ *           - name: X-handout_token
+ *             in: header
+ *             description: an authorization header
+ *             required: true
+ *             schema:
+ *              type: string
+ *        consumes:
+ *        - application/json
+ *        produces:
+ *        - application/json
+ *        requestBody:
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/definitions/userProfile'
+ *        responses:
+ *           201:
+ *              description: Success! Password Updated
+ *           400:
+ *              description: Error
+ * definitions:
+ *     userProfile:
+ *        type: object
+ *        required:
+ *        - oldPassword
+ *        - newPassword
+ *        properties:
+ *            oldPassword:
+ *                    type: string
+ *                    example: test12
+ *            newPassword:
+ *                    type: string
+ *                    example: test1234
+ */
+router.patch("/updateUserPassword", verifyToken, editUserPassword);
 
 export default router;
