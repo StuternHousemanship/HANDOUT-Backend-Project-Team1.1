@@ -1,11 +1,11 @@
 import { Application } from "express";
 import {
-    authenticate,
-    create,
-    verifyUserEmail,
-    resetpassword,
-    forgotpassword
-    } from "../Controllers/Auth/authController";
+  authenticate,
+  create,
+  verifyUserEmail,
+  resetpassword,
+  forgotpassword,
+} from "../Controllers/Auth/authController";
 
 /**
  * @swagger
@@ -44,125 +44,123 @@ import {
  */
 
 export const authRoute = (app: Application) => {
-    /**
-     * @swagger
-     * /auth/signup:
-     *    post:
-     *        description: This API is for creating a new user
-     *        tags: [Auth]
-     *        consumes:
-     *        - application/json
-     *        produces:
-     *        - application/json
-     *        requestBody:
-     *          content:
-     *            application/json:
-     *              schema:
-     *                $ref: '#/definitions/newUserCredentials'
-     *        responses:
-     *           201:
-     *              description: Email verified
-     *           400:
-     *              description: Error
-     * definitions:
-     *     newUserCredentials:
-     *        type: object
-     *        required:
-     *        - firstName
-     *        - lastName
-     *        - email
-     *        - mobile
-     *        - password
-     *        properties:
-     *            firstName:
-     *                    type: string
-     *                    example: Sadiq
-     *            lastName:
-     *                    type: string
-     *                    example: Sambo
-     *            email:
-     *                    type: string
-     *                    example: sadiqasg@gmail.com
-     *            mobile:
-     *                    type: string
-     *                    example: 09012345678
-     *            password:
-     *                    type: string
-     *                    example: Pass1234#
-     */
-    app.post("/auth/signup", create);
-   
+  /**
+   * @swagger
+   * /auth/signup:
+   *    post:
+   *        description: This API is for creating a new user
+   *        tags: [Auth]
+   *        consumes:
+   *        - application/json
+   *        produces:
+   *        - application/json
+   *        requestBody:
+   *          content:
+   *            application/json:
+   *              schema:
+   *                $ref: '#/definitions/newUserCredentials'
+   *        responses:
+   *           201:
+   *              description: Email verified
+   *           400:
+   *              description: Error
+   * definitions:
+   *     newUserCredentials:
+   *        type: object
+   *        required:
+   *        - firstName
+   *        - lastName
+   *        - email
+   *        - mobile
+   *        - password
+   *        properties:
+   *            firstName:
+   *                    type: string
+   *                    example: Sadiq
+   *            lastName:
+   *                    type: string
+   *                    example: Sambo
+   *            email:
+   *                    type: string
+   *                    example: sadiqasg@gmail.com
+   *            mobile:
+   *                    type: string
+   *                    example: 09012345678
+   *            password:
+   *                    type: string
+   *                    example: Pass1234#
+   */
+  app.post("/auth/signup", create);
 
-    /**
-     * @swagger
-     * /auth/confirm:
-     *    post:
-     *        description: This API is for verifying user email
-     *        tags: [Auth]
-     *        consumes:
-     *        - application/json
-     *        produces:
-     *        - application/json
-     *        requestBody:
-     *          content:
-     *            application/json:
-     *              schema:
-     *                $ref: '#/definitions/verifyCredentials'
-     *        responses:
-     *           201:
-     *              description: Email verified
-     *           400:
-     *              description: Error
-     * definitions:
-     *     verifyCredentials:
-     *        type: object
-     *        required:
-     *        - verificationCode
-     *        properties:
-     *            verificationCode:
-     *                    type: string
-     *                    example: abc123
-     */
-    app.post("/auth/confirm", verifyUserEmail);
+  /**
+   * @swagger
+   * /auth/confirm:
+   *    post:
+   *        description: This API is for verifying user email
+   *        tags: [Auth]
+   *        consumes:
+   *        - application/json
+   *        produces:
+   *        - application/json
+   *        requestBody:
+   *          content:
+   *            application/json:
+   *              schema:
+   *                $ref: '#/definitions/verifyCredentials'
+   *        responses:
+   *           201:
+   *              description: Email verified
+   *           400:
+   *              description: Error
+   * definitions:
+   *     verifyCredentials:
+   *        type: object
+   *        required:
+   *        - verificationCode
+   *        properties:
+   *            verificationCode:
+   *                    type: string
+   *                    example: abc123
+   */
+  app.post("/auth/confirm", verifyUserEmail);
 
-    /**
-     * @swagger
-     * /auth/login:
-     *    post:
-     *        description: This API is for authenticate users by typing email and password
-     *        tags: [Auth]
-     *        consumes:
-     *        - application/json
-     *        produces:
-     *        - application/json
-     *        requestBody:
-     *          content:
-     *            application/json:
-     *              schema:
-     *                $ref: '#/definitions/userCredentials'
-     *        responses:
-     *           201:
-     *              description: Login successful
-     *           400:
-     *              description: Error
-     * definitions:
-     *     userCredentials:
-     *        type: object
-     *        required:
-     *        - email
-     *        - password
-     *        properties:
-     *            email:
-     *                    type: string
-     *                    example: sadiqasg@gmail.com
-     *            password:
-     *                    type: string
-     *                    example: Pass1234#
-     */
-    app.post("/auth/login", authenticate);
-    app.post("/auth/resetpassword", resetpassword);
-    app.post("/auth/forgotpassword", forgotpassword);
-
+  /**
+   * @swagger
+   * /auth/login:
+   *    post:
+   *        description: This API is for authenticate users by typing email and password
+   *        tags: [Auth]
+   *        consumes:
+   *        - application/json
+   *        produces:
+   *        - application/json
+   *        requestBody:
+   *          content:
+   *            application/json:
+   *              schema:
+   *                $ref: '#/definitions/userCredentials'
+   *        responses:
+   *           201:
+   *              description: Login successful
+   *           400:
+   *              description: Error
+   * definitions:
+   *     userCredentials:
+   *        type: object
+   *        required:
+   *        - email
+   *        - password
+   *        properties:
+   *            email:
+   *                    type: string
+   *                    example: sadiqasg@gmail.com
+   *            password:
+   *                    type: string
+   *                    example: Pass1234#
+   */
+  app.post("/auth/login", authenticate);
+  app.post("/auth/resetpassword", resetpassword);
+  app.post("/auth/forgotpassword", forgotpassword);
 };
 
 export default authRoute;
