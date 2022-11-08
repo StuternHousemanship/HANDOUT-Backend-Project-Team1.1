@@ -1,5 +1,4 @@
 import { Application } from "express";
-import { log } from "util";
 import {
     authenticate,
     create,

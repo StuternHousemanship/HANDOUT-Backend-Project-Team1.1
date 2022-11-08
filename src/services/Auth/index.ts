@@ -87,6 +87,6 @@ export const logoutService = async (req: Request, res: Response) => {
       status: 'error'
     })
   } else {
-    res.redirect('/')
+    return logout
   }
 }
