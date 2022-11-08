@@ -88,12 +88,12 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
     
       const user = await new AuthRepository().forgotpassword(req.body.email);
       if (!user) return res.status(400).json({message:"Email not found"});
-      console.log("Emmanuel", user)
+      
   
-      let token = await new AuthRepository().userID(req.body.userId)
+      let token = await new AuthRepository().userID(user._id)
         if (!token) {
           token = await new tokens({
-            userId: user.id,
+            userId: user._id,
             token: code
           }).save()
         }
@@ -109,13 +109,13 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
 
 export const resetpasswordService = async (req: Request, res: Response) => {
     try {
-        const user = await new AuthRepository().userID(req.body.userId)
-        if (!user)
+        const userOne = await new AuthRepository().userID(req.body._id)
+        if (!userOne)
         return res.json({
             status: 400,
             error: "invalid user or expired",
         })
-        console.log("emmanuel", user)
+        console.log("emmanuel", userOne)
 
         const token = await new AuthRepository().findtokens(
            req.body.userId, req.body.token
@@ -127,8 +127,8 @@ export const resetpasswordService = async (req: Request, res: Response) => {
             error: "invalid link or expired",
         })
 
-        user.password = req.body.password;
-        await user.save();
+        userOne.password = req.body.password;
+        await userOne.save();
         await token.delete();
 
     } catch (err) {
