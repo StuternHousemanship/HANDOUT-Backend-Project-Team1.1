@@ -1,35 +1,34 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import * as dotenv from 'dotenv'
+import * as dotenv from "dotenv";
 import database from "./config/database";
 import { authRoute } from "./routes/authRoutes";
-import userRouter from './routes/userProfile';
+import userRouter from "./routes/userProfile";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
-
 
 dotenv.config();
 const app: Application = express();
 const port: number | string = process.env.PORT || 3000;
 
 const options = {
-    definition: {
-        openapi: "3.0.0",
-        info: {
-            title: "Handout API",
-            version: "1.0.0",
-            description: "Handout Express API documentation",
-        },
-        servers: [
-            {
-                url: "http://localhost:3000",
-            },
-            {
-                url: "http://localhost:5000",
-            },
-        ],
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Handout API",
+      version: "1.0.0",
+      description: "Handout Express API documentation",
     },
-    apis: ["./src/routes/*.ts"],
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+      {
+        url: "http://localhost:5000",
+      },
+    ],
+  },
+  apis: ["./src/routes/*.ts"],
 };
 
 const specs = swaggerJsDoc(options);
@@ -40,7 +39,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 authRoute(app);
-app.use("/", userRouter)
+app.use("/", userRouter);
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
