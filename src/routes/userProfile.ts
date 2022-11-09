@@ -5,7 +5,7 @@ import {
   CurrentUser,
   editUser,
   editUserPassword,
-} from "../Controllers/ProfileController/profile";
+} from "../controllers/ProfileController/profile";
 
 /**
  * @swagger

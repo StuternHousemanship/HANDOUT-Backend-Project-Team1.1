@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
-import { ItemType } from "../interfaces/itemType";
-import { createItemService } from "../services/item.service";
+import { ItemType } from "../../interfaces/itemType";
+import { createItemService } from "../../services/ItemService/item";
 
 export const createItem = (req: Request, res: Response) => {
+    const imageFile = (req as any).files;
+
     const newItem: ItemType = {
         name: req.body.name,
+        image: `items/${imageFile[0].filename}`,
         price: req.body.price,
         location: req.body.location,
         category: req.body.category,
