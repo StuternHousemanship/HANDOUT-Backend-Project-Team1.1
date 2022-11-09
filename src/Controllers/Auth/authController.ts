@@ -3,7 +3,6 @@ import {
   createUserService,
   loginService,
   verifyEmailService,
-  resetpasswordService,
   logoutService,
   forgotPasswordService,
 } from "../../services/Auth";
@@ -35,7 +34,4 @@ export const forgotPassword = async (req: Request, res: Response) => {
   await forgotPasswordService(req, res);
   return res.status(200).json({ message: "Password reset mail has been sent" });
 };
-export const resetpassword = async (req: Request, res: Response) => {
-  await resetpasswordService(req, res);
-  return res.status(200).json({ message: "password updated successfully" });
-};
+

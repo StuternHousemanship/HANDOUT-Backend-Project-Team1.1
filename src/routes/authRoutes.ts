@@ -3,7 +3,6 @@ import {
   authenticate,
   create,
   verifyUserEmail,
-  resetpassword,
   logout,
   forgotPassword,
 } from "../Controllers/Auth/authController";
@@ -160,8 +159,58 @@ export const authRoute = (app: Application) => {
    *                    example: Pass1234#
    */
   app.post("/auth/login", authenticate);
-  app.post("/auth/resetpassword", resetpassword);
+   /**
+   * @swagger
+   * /auth/confirm:
+   *    post:
+   *        description: This API is for sending a user email for forgotpassword
+   *        tags: [Auth]
+   *        consumes:
+   *        - application/json
+   *        produces:
+   *        - application/json
+   *        requestBody:
+   *          content:
+   *            application/json:
+   *              schema:
+   *                $ref: '#/definitions/verifyCredentials'
+   *        responses:
+   *           201:
+   *              description: Password reset mail has been sent
+   *           400:
+   *              description: Error
+   * definitions:
+   *     verifyCredentials:
+   *        type: object
+   *        required:
+   *        - verificationCode
+   *        properties:
+   *            verificationCode:
+   *                    type: string
+   *                    example: abc123
+   */
   app.post("/auth/forgotpassword", forgotPassword);
+    /**
+   * @swagger
+   * /auth/logout:
+   *    get:
+   *        description: This API is for Logging out the user
+   *        tags: [Logout]
+   *        consumes:
+   *        - application/json
+   *        produces:
+   *        - application/json
+   *        requestBody:
+   *          content:
+   *            application/json:
+   *              schema:
+   *                $ref: '#components/schemas/auth'
+   *        responses:
+   *           201:
+   *              description: Logged out successfully
+   *           400:
+   *              description: Error
+   */
   app.get("/auth/logout", logout);
 };
 
