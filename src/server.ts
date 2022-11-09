@@ -27,7 +27,7 @@ const options = {
         url: "http://localhost:3000",
       },
       {
-        url: "http://localhost:5000",
+        url: "https://handout.beargaze.com",
       },
     ],
   },
