@@ -161,7 +161,7 @@ export const authRoute = (app: Application) => {
   app.post("/auth/login", authenticate);
    /**
    * @swagger
-   * /auth/confirm:
+   * /auth/forgotpassword:
    *    post:
    *        description: This API is for sending a user email for forgotpassword
    *        tags: [Auth]
@@ -173,38 +173,34 @@ export const authRoute = (app: Application) => {
    *          content:
    *            application/json:
    *              schema:
-   *                $ref: '#/definitions/verifyCredentials'
+   *                $ref: '#/definitions/mailCredentials'
    *        responses:
    *           201:
    *              description: Password reset mail has been sent
    *           400:
    *              description: Error
    * definitions:
-   *     verifyCredentials:
+   *     mailCredentials:
    *        type: object
    *        required:
-   *        - verificationCode
+   *        - email
    *        properties:
-   *            verificationCode:
+   *           email:
    *                    type: string
-   *                    example: abc123
+   *                    example: azunna.onugha@gmail.com
    */
+
   app.post("/auth/forgotpassword", forgotPassword);
     /**
    * @swagger
    * /auth/logout:
    *    get:
    *        description: This API is for Logging out the user
-   *        tags: [Logout]
-   *        consumes:
-   *        - application/json
-   *        produces:
-   *        - application/json
-   *        requestBody:
-   *          content:
+   *        tags: [Auth]
+   *        content:
    *            application/json:
    *              schema:
-   *                $ref: '#components/schemas/auth'
+   *                type: Object
    *        responses:
    *           201:
    *              description: Logged out successfully
