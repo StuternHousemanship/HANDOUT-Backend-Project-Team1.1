@@ -101,7 +101,7 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
 export const resetpasswordService = async (req: Request, res: Response) => {
 
 try {
-    const user = await new AuthRepository().userID(req.body.user._id);
+    const user = await new AuthRepository().userID();
     if (!user)
       return res.json({
         status: 400,
@@ -132,3 +132,14 @@ try {
   }
 };
 
+export const logoutService = async (req: Request, res: Response) => {
+    const logout = await res.clearCookie("token");
+  
+    if (!logout) {
+      return res.status(400).json({
+        status: "error",
+      });
+    } else {
+      return logout;
+    }
+  };
