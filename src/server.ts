@@ -6,6 +6,7 @@ import { authRoute } from "./routes/authRoutes";
 
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import itemRoute from "./routes/itemRoute";
 
 dotenv.config();
 
@@ -35,11 +36,12 @@ const options = {
 const specs = swaggerJsDoc(options);
 
 database().catch((err) => console.error(err));
-app.use(cors({ origin: "http://localhost:5000" }));
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 authRoute(app);
+itemRoute(app);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.get("/", (req: Request, res: Response) => {
