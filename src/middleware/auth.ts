@@ -25,12 +25,10 @@ export const verifyToken = (
       return res.status(403).send("A token is required for authentication");
     }
     const decoded = jwt.verify(token, TOKEN_SECRET);
-
     req.body.authUser = decoded;
+    next();
   } catch (err) {
     log.error(err);
-
     return res.status(401).send("Invalid Token");
   }
-  next();
 };
