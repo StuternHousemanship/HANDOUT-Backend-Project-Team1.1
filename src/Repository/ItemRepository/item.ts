@@ -13,7 +13,6 @@ export class ItemRepository {
         return error;
       });
   }
- 
   public async AllItem(): Promise<any> {
     let result =  Item.find({});
     
@@ -34,3 +33,12 @@ export class ItemRepository {
     return item;
   }
 }
+
+  public async getAllItems() {
+    await Item.find({}).then((result) => {
+      return result;
+    })
+    .catch((error) => {
+      return error;
+    });
+  }

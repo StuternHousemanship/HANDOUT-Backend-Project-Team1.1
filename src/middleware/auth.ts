@@ -15,6 +15,12 @@ dotenv.config();
 
 const TOKEN_SECRET = String(process.env.TOKEN_SECRET);
 
+declare module "express-serve-static-core" {
+  export interface Request {
+    user: any;
+  }
+}
+
 export const verifyToken = (
   req: Request,
   res: Response,

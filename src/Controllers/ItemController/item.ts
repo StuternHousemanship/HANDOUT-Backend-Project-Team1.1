@@ -2,6 +2,10 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { ItemType } from "../../interfaces/itemType";
 import { createItemService, getAllItems, getItemById, updateItem,deleteItem } from "../../services/ItemService/item";
+import {
+  createItemService,
+  getItemsService,
+} from "../../services/ItemService/item";
 
 export const createItem = (req: Request, res: Response) => {
   const { user } = req.user;
@@ -18,16 +22,24 @@ export const createItem = (req: Request, res: Response) => {
       userId: user._id,
     };
 
-    createItemService(newItem)
-        .then(() => {
-            res.status(200).json({ message: "New item created", newItem });
-        })
-        .catch((error) => {
-            res.status(400).json(error);
-        });
+  createItemService(newItem)
+    .then(() => {
+      res.status(200).json({ message: "New item created", newItem });
+    })
+    .catch((error) => {
+      res.status(400).send(error);
+    });
 };
 
-
+export const getAllItems = async (req: Request, res: Response) => {
+  await getItemsService()
+    .then((items) => {
+      res.status(200).json(items);
+    })
+    .catch((error) => {
+      res.status(400).send(error);
+    });
+};
 
 export const getTotalItems = async (req: Request, res: Response) => {
    const items = await getAllItems(req, res);

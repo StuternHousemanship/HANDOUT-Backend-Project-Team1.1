@@ -1,10 +1,13 @@
 import express from "express";
+
 import { createItem,getTotalItems,getSingleItem,updatedItem, deletedItem } from "../Controllers/ItemController/item";
-import { verifyToken } from "../middleware/auth";
 import checkPermissions from "../middleware/checkPermission"
 const itemRouter = express.Router();
-import { uploadImg } from "../middleware/upload";
 import {paginatedLists} from "../middleware/paginated"
+import { createItem, getAllItems } from "../controllers/ItemController/item";
+import { verifyToken } from "../middleware/auth";
+import { uploadImg } from "../middleware/upload";
+const itemRouter = express.Router();
 /**
  * @swagger
  * components:
@@ -13,7 +16,6 @@ import {paginatedLists} from "../middleware/paginated"
  *       type: object
  *       required:
  *         - name
- *         - image
  *         - price
  *         - location
  *         - category
@@ -22,9 +24,6 @@ import {paginatedLists} from "../middleware/paginated"
  *         name:
  *           type: string
  *           description: item name
- *         image:
- *           type: string
- *           description: item image
  *         price:
  *           type: number
  *           description: item price
@@ -39,7 +38,6 @@ import {paginatedLists} from "../middleware/paginated"
  *           description: item status either - new, used less than 5 times, used more than 5 times, old, damaged
  *       example:
  *         name: item name
- *         image: file
  *         price: 1000
  *         location: somewhere safe
  *         category: books
@@ -50,15 +48,16 @@ import {paginatedLists} from "../middleware/paginated"
    * @swagger
    * /item:
    *    post:
+   *        summary: Creates a new item
    *        description: This API is for creating a new item
    *        tags: [Item]
    *        consumes:
-   *          - multipart/form-data
+   *        - application/json
    *        produces:
    *        - application/json
    *        requestBody:
    *          content:
-   *            multipart/form-data:
+   *            application/json:
    *              schema:
    *                $ref: '#/definitions/newItem'
    *        responses:
@@ -71,7 +70,6 @@ import {paginatedLists} from "../middleware/paginated"
    *        type: object
    *        required:
    *        - name
-   *        - image
    *        - price
    *        - location
    *        - category
@@ -80,9 +78,6 @@ import {paginatedLists} from "../middleware/paginated"
    *            name:
    *                    type: string
    *                    example: Call of Duty
-   *            image:  
-   *                    type: string
-   *                    format: binary
    *            price:
    *                    type: number
    *                    example: 20000
@@ -101,5 +96,23 @@ itemRouter.get("/item/allItems", verifyToken, paginatedLists,getTotalItems);
 itemRouter.get("/item/oneItem/:id", verifyToken, getSingleItem);
 itemRouter.put("/item/editItem/:id", verifyToken, checkPermissions, updatedItem);
 itemRouter.delete("/item/deleteItem/:id", verifyToken,checkPermissions, deletedItem);
+
+/**
+ * @swagger
+ * /item:
+ *   get:
+ *     summary: Returns the list of all the items
+ *     tags: [Item]
+ *     responses:
+ *       200:
+ *         description: The list of the items
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Item'
+ */
+itemRouter.get("/item", verifyToken, getAllItems);
 
 export default itemRouter;

@@ -18,7 +18,6 @@ export const createItemService = async (newItem: ItemType) => {
 };
 
 
-
 export const getAllItems =async (req: Request, res: Response) => {
   
   const items = await new ItemRepository().AllItem();
@@ -83,4 +82,8 @@ export const deleteItem = async (req:Request, res:Response) => {
   }
 }
 
+export const getItemsService = async () => {
+  const items = await store.getAllItems();
+  return items;
+};
 

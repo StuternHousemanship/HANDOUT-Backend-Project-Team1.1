@@ -1,6 +1,6 @@
 import { ImageType } from "../../interfaces/imageType";
-import { ImageRepository } from "../../Repository/ImageRepository/image";
 
+import { ImageRepository } from "../../repository/ImageRepository/image";
 const store = new ImageRepository();
 
 export const uploadImageService = async (newImage: ImageType) => {
