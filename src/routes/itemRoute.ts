@@ -1,13 +1,12 @@
 import express from "express";
 
-import { createItem,getTotalItems,getSingleItem,updatedItem, deletedItem } from "../Controllers/ItemController/item";
+import { createItem, getAllItems, PaginatedItems,getSingleItem,updatedItem, deletedItem } from "../Controllers/ItemController/item";
 import checkPermissions from "../middleware/checkPermission"
 const itemRouter = express.Router();
 import {paginatedLists} from "../middleware/paginated"
-import { createItem, getAllItems } from "../controllers/ItemController/item";
 import { verifyToken } from "../middleware/auth";
 import { uploadImg } from "../middleware/upload";
-const itemRouter = express.Router();
+
 /**
  * @swagger
  * components:
@@ -92,10 +91,6 @@ const itemRouter = express.Router();
    *                    example: new
    */
 itemRouter.post("/item", verifyToken, uploadImg,checkPermissions, createItem);
-itemRouter.get("/item/allItems", verifyToken, paginatedLists,getTotalItems);
-itemRouter.get("/item/oneItem/:id", verifyToken, getSingleItem);
-itemRouter.put("/item/editItem/:id", verifyToken, checkPermissions, updatedItem);
-itemRouter.delete("/item/deleteItem/:id", verifyToken,checkPermissions, deletedItem);
 
 /**
  * @swagger
@@ -114,5 +109,10 @@ itemRouter.delete("/item/deleteItem/:id", verifyToken,checkPermissions, deletedI
  *                 $ref: '#/components/schemas/Item'
  */
 itemRouter.get("/item", verifyToken, getAllItems);
+
+itemRouter.get("/item/pageItems", verifyToken, paginatedLists,PaginatedItems);
+itemRouter.get("/item/oneItem/:id", verifyToken, getSingleItem);
+itemRouter.put("/item/editItem/:id", verifyToken, checkPermissions, updatedItem);
+itemRouter.delete("/item/deleteItem/:id", verifyToken,checkPermissions, deletedItem);
 
 export default itemRouter;

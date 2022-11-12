@@ -18,9 +18,9 @@ export const createItemService = async (newItem: ItemType) => {
 };
 
 
-export const getAllItems =async (req: Request, res: Response) => {
+export const getPaginatedItems =async (req: Request, res: Response) => {
   
-  const items = await new ItemRepository().AllItem();
+  const items = await new ItemRepository().AllItemLists();
   
   return items
 }
@@ -38,18 +38,11 @@ export const getItemById = async (req:Request, res:Response) => {
 }
 
 export const updateItem = async (req:any, res:Response) => {
+  const { name,price, description, image,location,category,status,shippingOptions } = req.body
   
-  const {
-    name,
-    price,
-    description,
-    image,
-    location,
-    category,
-    status,
-    shippingOptions,
-  } = req.body
-console.log(req.body);
+  if (!req.body ){
+    throw new BadRequestError("Field(s) must not be empty")
+  }
 
   const item = await new ItemRepository().editItem (req.params.id)
 
@@ -62,17 +55,21 @@ console.log(req.body);
     item.category = category
     item.status = status
     item.shippingOptions = shippingOptions
-
     const updatedProduct = await item.save()
     res.json(updatedProduct)
-  } else {
+  } 
+ else {
     res.status(404)
     throw new NotFoundError(' Item not available')
   }
+
 }
 
 export const deleteItem = async (req:Request, res:Response) => {
-  const item = await new ItemRepository().removeItem(req.params.id)
+  const item = await new ItemRepository().deleteItem(req.params.id)
+  if (!item) {
+    throw new NotFoundError(`No item with id :${req.params.id}`);
+  }
 
   if (item) {
     await item.remove()
@@ -86,4 +83,3 @@ export const getItemsService = async () => {
   const items = await store.getAllItems();
   return items;
 };
-

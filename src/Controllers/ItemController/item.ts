@@ -1,11 +1,8 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { ItemType } from "../../interfaces/itemType";
-import { createItemService, getAllItems, getItemById, updateItem,deleteItem } from "../../services/ItemService/item";
-import {
-  createItemService,
-  getItemsService,
-} from "../../services/ItemService/item";
+import { createItemService,getItemsService, getPaginatedItems, getItemById, updateItem,deleteItem } from "../../services/ItemService/item";
+
 
 export const createItem = (req: Request, res: Response) => {
   const { user } = req.user;
@@ -41,8 +38,8 @@ export const getAllItems = async (req: Request, res: Response) => {
     });
 };
 
-export const getTotalItems = async (req: Request, res: Response) => {
-   const items = await getAllItems(req, res);
+export const PaginatedItems = async (req: Request, res: Response) => {
+   const items = await getPaginatedItems(req, res);
    res.status(StatusCodes.OK);
   };
 
@@ -57,5 +54,5 @@ export const getTotalItems = async (req: Request, res: Response) => {
   };
   export const deletedItem = async (req: Request, res: Response) => {
     await deleteItem(req, res);
-    res.status(StatusCodes.OK).json({ message: 'Item removed' })
+    res.status(StatusCodes.OK).json({ message: 'Item deleted' })
   };

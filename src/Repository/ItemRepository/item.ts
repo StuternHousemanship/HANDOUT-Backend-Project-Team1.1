@@ -13,7 +13,7 @@ export class ItemRepository {
         return error;
       });
   }
-  public async AllItem(): Promise<any> {
+  public async AllItemLists(): Promise<any> {
     let result =  Item.find({});
     
   }
@@ -27,9 +27,8 @@ export class ItemRepository {
     return item
   }
 
-  public async removeItem(Id: any): Promise<any> {
+  public async deleteItem(Id: any): Promise<any> {
     const item= await Item.findById(Id)
-    if (!item) return null;
     return item;
   }
 }
@@ -42,3 +41,5 @@ export class ItemRepository {
       return error;
     });
   }
+
+
