@@ -1,9 +1,15 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction,  Response } from "express";
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 import { Logger } from "tslog";
+import { Request } from "express-serve-static-core";
 
 const log: Logger = new Logger({ name: "myLogger" });
+declare module 'express-serve-static-core' {
+  export interface Request {
+    user: any
+  }
+}
 
 dotenv.config();
 

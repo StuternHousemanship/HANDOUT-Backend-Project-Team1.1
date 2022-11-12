@@ -25,13 +25,12 @@ export class AuthRepository {
   }
   public async getUser(userId: string): Promise<any> {
     const user = await User.findById(userId);
-    user.password = " ";
+     user.password = " ";
     if (!user) return null;
     return user;
   }
   public async userEdited(email: string): Promise<any> {
     const user = await User.findOne({ email });
-    user.password = " ";
     if (!user) return null;
     return user;
   }
