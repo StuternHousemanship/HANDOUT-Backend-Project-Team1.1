@@ -14,3 +14,8 @@ export const createItemService = async (newItem: ItemType) => {
       throw new Error(error);
     });
 };
+
+export const getItemsService = async () => {
+  const items = await store.getAllItems();
+  return items;
+};

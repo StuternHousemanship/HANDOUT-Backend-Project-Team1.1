@@ -13,4 +13,13 @@ export class ItemRepository {
         return error;
       });
   }
+
+  public async getAllItems() {
+    await Item.find({}).then((result) => {
+      return result;
+    })
+    .catch((error) => {
+      return error;
+    });
+  }
 }

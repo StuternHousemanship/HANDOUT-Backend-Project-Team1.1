@@ -1,8 +1,9 @@
 import express from "express";
-import { createItem } from "../controllers/ItemController/item";
+import { createItem, getAllItems } from "../controllers/ItemController/item";
 import { verifyToken } from "../middleware/auth";
-const itemRouter = express.Router();
 import { uploadImg } from "../middleware/upload";
+const itemRouter = express.Router();
+
 /**
  * @swagger
  * components:
@@ -11,7 +12,6 @@ import { uploadImg } from "../middleware/upload";
  *       type: object
  *       required:
  *         - name
- *         - image
  *         - price
  *         - location
  *         - category
@@ -20,9 +20,6 @@ import { uploadImg } from "../middleware/upload";
  *         name:
  *           type: string
  *           description: item name
- *         image:
- *           type: string
- *           description: item image
  *         price:
  *           type: number
  *           description: item price
@@ -37,7 +34,6 @@ import { uploadImg } from "../middleware/upload";
  *           description: item status either - new, used less than 5 times, used more than 5 times, old, damaged
  *       example:
  *         name: item name
- *         image: file
  *         price: 1000
  *         location: somewhere safe
  *         category: books
@@ -48,15 +44,16 @@ import { uploadImg } from "../middleware/upload";
    * @swagger
    * /item:
    *    post:
+   *        summary: Creates a new item
    *        description: This API is for creating a new item
    *        tags: [Item]
    *        consumes:
-   *          - multipart/form-data
+   *        - application/json
    *        produces:
    *        - application/json
    *        requestBody:
    *          content:
-   *            multipart/form-data:
+   *            application/json:
    *              schema:
    *                $ref: '#/definitions/newItem'
    *        responses:
@@ -69,7 +66,6 @@ import { uploadImg } from "../middleware/upload";
    *        type: object
    *        required:
    *        - name
-   *        - image
    *        - price
    *        - location
    *        - category
@@ -78,9 +74,6 @@ import { uploadImg } from "../middleware/upload";
    *            name:
    *                    type: string
    *                    example: Call of Duty
-   *            image:  
-   *                    type: string
-   *                    format: binary
    *            price:
    *                    type: number
    *                    example: 20000
@@ -95,5 +88,23 @@ import { uploadImg } from "../middleware/upload";
    *                    example: new
    */
 itemRouter.post("/item", verifyToken, uploadImg, createItem);
+
+/**
+ * @swagger
+ * /item:
+ *   get:
+ *     summary: Returns the list of all the items
+ *     tags: [Item]
+ *     responses:
+ *       200:
+ *         description: The list of the items
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Item'
+ */
+itemRouter.get("/item", verifyToken, getAllItems);
 
 export default itemRouter;

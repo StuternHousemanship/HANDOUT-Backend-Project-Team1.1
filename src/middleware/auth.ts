@@ -9,6 +9,12 @@ dotenv.config();
 
 const TOKEN_SECRET = String(process.env.TOKEN_SECRET);
 
+declare module "express-serve-static-core" {
+  export interface Request {
+    user: any;
+  }
+}
+
 export const verifyToken = (
   req: Request,
   res: Response,
@@ -25,7 +31,7 @@ export const verifyToken = (
       return res.status(403).send("A token is required for authentication");
     }
     const decoded = jwt.verify(token, TOKEN_SECRET);
-    req.body.authUser = decoded;
+    req.user = decoded;
     next();
   } catch (err) {
     log.error(err);

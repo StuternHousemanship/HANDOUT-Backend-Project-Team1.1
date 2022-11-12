@@ -9,6 +9,7 @@ import swaggerJsDoc from "swagger-jsdoc";
 import itemRouter from "./routes/itemRoute";
 import path from "path";
 import cookieParser from 'cookie-parser';
+import imageRouter from "./routes/imageRoute";
 
 dotenv.config();
 const app: Application = express();
@@ -24,7 +25,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "http://localhost:5000",
       },
       {
         url: "https://handout.beargaze.com",
@@ -46,6 +47,7 @@ app.use(cookieParser());
 authRoute(app);
 app.use("/", itemRouter);
 app.use("/", userRouter);
+app.use("/", imageRouter);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.get("/", (req: Request, res: Response) => {
