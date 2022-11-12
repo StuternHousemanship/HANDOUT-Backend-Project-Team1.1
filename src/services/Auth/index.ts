@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 import { Request, Response } from "express";
 import { generateCode } from "../../services/generateCode";
 import bcrypt from "bcrypt";
-import { AuthRepository } from "../../repository/Auth";
+import { AuthRepository } from "../../Repository/Auth";
 import jwt from "jsonwebtoken";
 import { sendVerificationMail, sendForgotpassword } from "../sendGrid";
 import UserType from "../../interfaces/userType";

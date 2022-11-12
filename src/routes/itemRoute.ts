@@ -1,8 +1,10 @@
 import express from "express";
-import { createItem } from "../controllers/ItemController/item";
+import { createItem,getTotalItems,getSingleItem,updatedItem, deletedItem } from "../Controllers/ItemController/item";
 import { verifyToken } from "../middleware/auth";
+import checkPermissions from "../middleware/checkPermission"
 const itemRouter = express.Router();
 import { uploadImg } from "../middleware/upload";
+import {paginatedLists} from "../middleware/paginated"
 /**
  * @swagger
  * components:
@@ -94,6 +96,10 @@ import { uploadImg } from "../middleware/upload";
    *                    type: string
    *                    example: new
    */
-itemRouter.post("/item", verifyToken, uploadImg, createItem);
+itemRouter.post("/item", verifyToken, uploadImg,checkPermissions, createItem);
+itemRouter.get("/item/allItems", verifyToken, paginatedLists,getTotalItems);
+itemRouter.get("/item/oneItem/:id", verifyToken, getSingleItem);
+itemRouter.put("/item/editItem/:id", verifyToken, checkPermissions, updatedItem);
+itemRouter.delete("/item/deleteItem/:id", verifyToken,checkPermissions, deletedItem);
 
 export default itemRouter;

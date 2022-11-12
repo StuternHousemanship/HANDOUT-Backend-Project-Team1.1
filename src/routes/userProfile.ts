@@ -5,7 +5,7 @@ import {
   CurrentUser,
   editUser,
   editUserPassword,
-} from "../controllers/ProfileController/profile";
+} from "../Controllers/ProfileController/profile";
 
 /**
  * @swagger
@@ -13,17 +13,9 @@ import {
  *   schemas:
  *     Profile:
  *       type: object
- *       required:
- *         - userId
- *         - firstName
- *         - lastName
- *         - email
- *         - mobile
- *         - password
- *         - location
  *       properties:
  *         userId:
- *           type: string
+ *           type: integer
  *           description: user profile _id
  *         firstName:
  *           type: string
@@ -43,14 +35,29 @@ import {
  *         location:
  *           type: string
  *           description: user location
- *       example:
- *         _id: 6366c9495c3e726d87976f84
- *         firstName: marvel
- *         lastName: stone
- *         email: srite@gmail.com
- *         mobile: 99999923
- *         password: mypassword
- *         location: my city
+ *       User:
+ *         type: object
+ *         properties:
+ *            id:
+ *              type: integer
+ *              format: int64
+ *              example: 10
+ *            firstName:
+ *              type: integer
+ *              format: int64
+ *              example: 10
+ *            lastName:
+ *              type: integer
+ *              format: int64
+ *              example: 10
+ *            mobile:
+ *              type: integer
+ *              format: int64
+ *              example: 10
+ *            location:
+ *              type: integer
+ *              format: int64
+ *              example: 10
  */
 
 router.get("/getSingleUser/:id", verifyToken, CurrentUser);
@@ -59,15 +66,19 @@ router.get("/getSingleUser/:id", verifyToken, CurrentUser);
  * /getSingleUser/{id}:
  *    get:
  *        description: This API is for getting user Profile
- *        tags: []
- *        operationID:
- *           - name: id
+ *        tags: 
+ *          - user
+ *        summary: find user by ID
+ *        operationID: getUserById
+ *        parameters:
+ *           - name: userId
  *             in: path
- *             description: User ID
+ *             description: ID of user
  *             required: true
  *             schema:
- *              type: string
- *           - name: X-handout_token
+ *               type: integer
+ *               format: int64
+ *           - name: X-access-token
  *             in: header
  *             description: an authorization header
  *             required: true
@@ -79,39 +90,32 @@ router.get("/getSingleUser/:id", verifyToken, CurrentUser);
  *              content:
  *                application/json:
  *                   schema:
- *                     $ref: 'components/schemas/Profile'
- *           400:
+ *                     type: object
+ *           '400':
  *              description: Error
- *        components:
- *          schemas:
- *            Profile:
- *                type: object
- *                properties:
- *                   id:
- *                     type:string
- *                   firstName:
- *                     type:string
- *                   lastName:
- *                     type:string
- *                   email:
- *                     type:string
- *                   mobile:
- *                     type:string
- *                   location:
- *                     type:string
  */
 router.patch("/updateUser", verifyToken, editUser);
 /**
  * @swagger
  * /updateUser:
  *    patch:
- *        description: This API is for getting user Profile
- *        tags: []
- *        operationID:
- *           - name: X-handout_token
+ *        description: This API is for updating user Profile
+ *        tags: 
+ *          - user
+ *        summary: update user password by ID
+ *        operationID: getUserById
+ *        parameters:
+ *           - name: userId
+ *             in: path
+ *             description: ID of user
+ *             required: true
+ *             schema:
+ *               type: integer
+ *               format: int64
+ *           - name: X-access-token
  *             in: header
  *             description: an authorization header
- *             required: true
+ *             required: false
  *             schema:
  *              type: string
  *        consumes:
@@ -166,10 +170,18 @@ router.patch("/updateUserPassword", verifyToken, editUserPassword);
  *        description: This API is for update users password
  *        tags: []
  *        operationID:
- *           - name: X-handout_token
+ *        parameters:
+ *           - name: userId
+ *             in: path
+ *             description: ID of user
+ *             required: true
+ *             schema:
+ *               type: integer
+ *               format: int64
+ *           - name: X-access-token
  *             in: header
  *             description: an authorization header
- *             required: true
+ *             required: false
  *             schema:
  *              type: string
  *        consumes:
