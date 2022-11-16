@@ -1,10 +1,9 @@
 import { ItemType } from "../../interfaces/itemType";
+import Item from "../../models/itemModel";
 import { ItemRepository } from "../../repository/ItemRepository/item";
 
-const store = new ItemRepository();
-
 export const createItemService = async (newItem: ItemType) => {
-  await store
+  await new ItemRepository()
     .createItem(newItem)
     .then((item) => {
       return item;
@@ -15,7 +14,7 @@ export const createItemService = async (newItem: ItemType) => {
     });
 };
 
-export const getItemsService = async () => {
-  const items = await store.getAllItems();
+export const getItemsService = async () => { 
+  const items = await new ItemRepository().getAllItems();
   return items;
 };
