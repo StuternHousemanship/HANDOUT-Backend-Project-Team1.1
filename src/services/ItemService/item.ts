@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { BadRequestError, NotFoundError } from "../../errors";
 import { ItemType } from "../../interfaces/itemType";
-import { ItemRepository } from "../../Repository/ItemRepository/item";
+import { ItemRepository } from "../../repository/ItemRepository/item";
+
 new ItemRepository();
 
 
@@ -80,6 +81,6 @@ export const deleteItem = async (req:Request, res:Response) => {
 }
 
 export const getItemsService = async () => {
-  const items = await store.getAllItems();
+  const items = await new ItemRepository().getAllItems();
   return items;
 };
