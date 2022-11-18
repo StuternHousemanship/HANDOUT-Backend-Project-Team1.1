@@ -18,4 +18,4 @@ export const uploadImage = (req: Request, res: Response) => {
         .catch((error) => {
             res.status(400).json(error);
         });
-};
+    }

@@ -1,5 +1,6 @@
 import express from "express";
-import { uploadImage } from "../controllers/imageController/image";
+
+import { uploadImage } from "../Controllers/imageController/image";
 import { verifyToken } from "../middleware/auth";
 import { uploadImg } from "../middleware/upload";
 const imageRouter = express.Router();

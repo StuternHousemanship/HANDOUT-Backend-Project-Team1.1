@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { BadRequestError, UnAuthenticatedError } from "../../errors";
 
-import { AuthRepository } from "../../repository/Auth";
+import { AuthRepository } from "../../Repository/Auth";
 new AuthRepository();
 
 const updateUserPassword = async (req: Request, res: Response) => {
@@ -12,9 +12,8 @@ const updateUserPassword = async (req: Request, res: Response) => {
     throw new BadRequestError("Please provide both values");
   }
 
-  const user = await new AuthRepository().editedPassword(
-    req.body.authUser.user._id
-  );
+  const user = await new AuthRepository().editedPassword(req.user.user._id);
+console.log(req);
 
   const isPasswordCorrect = await comparePassword(user.password, oldPassword);
   if (!isPasswordCorrect) {
