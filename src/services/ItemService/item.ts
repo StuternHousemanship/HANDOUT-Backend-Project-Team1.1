@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { BadRequestError, NotFoundError } from "../../errors";
 import { ItemType } from "../../interfaces/itemType";
-import { ItemRepository } from "../../repository/ItemRepository/item";
+import { ItemRepository } from "../../Repository/ItemRepository/item";
 
 new ItemRepository();
 

@@ -25,7 +25,6 @@ export class AuthRepository {
   }
   public async getUser(userId: string): Promise<any> {
     const user = await User.findById(userId);
-     user.password = " ";
     if (!user) return null;
     return user;
   }
