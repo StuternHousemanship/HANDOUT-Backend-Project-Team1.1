@@ -87,7 +87,7 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
   try {
     const user = await new AuthRepository().forgotpassword(req.body.email);
     if (!user) return res.status(400).json({ message: "Email not found" });
-
+   
     let token = await new AuthRepository().userID(user._id);
     if (!token) {
       token = await new tokens({
@@ -95,12 +95,35 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
         token: code,
       }).save();
     }
-
-    await sendForgotpassword("User", req.body.email, code);
+    console.log(token)
+    const link =  `${process.env.BASE_URL}/passwordReset?token=${user._id}/${token.token}`
+    await sendForgotpassword("User", req.body.email, link);
   } catch (err) {
     return err;
   }
 };
+
+export const resetpasswordService = async (req: Request, res: Response) => {
+  const user = await new AuthRepository().userID(req.params.userId)
+
+  if(!user) return res.status(404).json({message: "Invalid or expired password token"})
+
+  const token = await tokens.findOne({
+    userId: user._id,
+    token: req.params.token
+  })
+
+  if(!token)
+  return res.json({
+    status: 400,
+    error: "invalid code or expired"
+  })
+
+  user.password = bcrypt.hashSync(req.body.password, 10)
+  await user.save()
+  await token.delete()
+}
+
 
 export const logoutService = async (req: Request, res: Response) => {
     const logout = await res.clearCookie("token");
