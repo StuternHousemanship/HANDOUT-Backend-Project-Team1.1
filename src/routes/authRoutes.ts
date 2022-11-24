@@ -209,7 +209,7 @@ export const authRoute = (app: Application) => {
    *              description: Error
    */
   app.get("/auth/logout", logout);
-  app.post("auth/resetpassword/:userId/:token", resetPassword)
+  app.post("/auth/resetpassword/:userId/:token", resetPassword)
 };
 
 export default authRoute;
