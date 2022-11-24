@@ -43,8 +43,8 @@ export class AuthRepository {
     if (!user) return null;
     return user;
   }
-  public async userID(userId: string): Promise<any> {
-    const userOne = await tokens.findById({ userId });
+  public async userID(userId: number): Promise<any> {
+    const userOne = await tokens.findOne({ userId });
     if (!userOne) return null;
     return userOne;
   }

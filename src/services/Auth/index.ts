@@ -9,6 +9,7 @@ import UserType from "../../interfaces/userType";
 import { digitalCode } from "../digitalCode";
 import { tokens } from "../../models/tokenModel";
 import schema, { passwordError } from "../../middleware/passwordValidator";
+import User from "../../models/userModel"
 
 dotenv.config();
 
@@ -95,7 +96,7 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
         token: code,
       }).save();
     }
-    console.log(token)
+   
     const link =  `${process.env.BASE_URL}/passwordReset?token=${user._id}/${token.token}`
     await sendForgotpassword("User", req.body.email, link);
   } catch (err) {
@@ -104,7 +105,7 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
 };
 
 export const resetpasswordService = async (req: Request, res: Response) => {
-  const user = await new AuthRepository().userID(req.params.userId)
+  const user = await User.findById(req.params.userId)
 
   if(!user) return res.status(404).json({message: "Invalid or expired password token"})
 

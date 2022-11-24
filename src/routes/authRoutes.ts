@@ -5,7 +5,7 @@ import {
   verifyUserEmail,
   logout,
   forgotPassword,
-  resestPassword
+  resetPassword
 } from "../Controllers/Auth/authController";
 
 /**
@@ -209,7 +209,7 @@ export const authRoute = (app: Application) => {
    *              description: Error
    */
   app.get("/auth/logout", logout);
-  app.post("auth/resetpassword/:id/:token", resestPassword)
+  app.post("auth/resetpassword/:userId/:token", resetPassword)
 };
 
 export default authRoute;
