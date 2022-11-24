@@ -3,7 +3,7 @@ import User from "../../models/userModel";
 import { tokens } from "../../models/tokenModel";
 
 export class AuthRepository {
-  async createUser(user: UserType) {
+  public async createUser(user: UserType) {
     const newUser = new User(user);
     return newUser.save();
   }
@@ -25,14 +25,11 @@ export class AuthRepository {
   }
   public async getUser(userId: string): Promise<any> {
     const user = await User.findById(userId);
-    user.password = " ";
     if (!user) return null;
     return user;
   }
   public async userEdited(email: string): Promise<any> {
     const user = await User.findOne({ email });
-    user.password = " ";
-    user.password = " ";
     if (!user) return null;
     return user;
   }
