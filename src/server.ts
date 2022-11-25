@@ -37,7 +37,7 @@ const options = {
 
 const specs = swaggerJsDoc(options);
 const corsOptions = {
-  origin: ["*", "http://locahost:3000", "https://stutern-handout.web.app/"]
+  origin: ["*", "http://localhost:3000", "https://stutern-handout.web.app/"]
 }
 
 database().catch((err) => console.error(err));
