@@ -1,11 +1,13 @@
 type UserType = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    mobile: number;
-    password: string;
-    active: boolean;
-    verificationCode: string;
+  userId?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  mobile: number;
+  password: string;
+  active: boolean;
+  verificationCode: string;
+  location?: string;
 };
 
-export default UserType
+export default UserType;
