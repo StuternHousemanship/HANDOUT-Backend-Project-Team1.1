@@ -8,6 +8,7 @@ import { sendVerificationMail, sendForgotpassword } from "../sendGrid";
 import UserType from "../../interfaces/userType";
 import { digitalCode } from "../digitalCode";
 import { tokens } from "../../models/tokenModel";
+import schema, { passwordError } from "../../middleware/passwordValidator";
 
 dotenv.config();
 
@@ -16,6 +17,9 @@ new AuthRepository();
 
 export const createUserService = async (req: Request, res: Response) => {
   const code = generateCode();
+
+  const passwordValidate = schema.validate(req.body.password);
+  if (!passwordValidate) return res.status(400).json(passwordError);
 
   const newUser: UserType = {
     firstName: req.body.firstName,
@@ -44,7 +48,7 @@ export const createUserService = async (req: Request, res: Response) => {
 
 export const verifyEmailService = async (req: Request, res: Response) => {
   const user = await new AuthRepository().createUserEmail(
-    req.body.verificationCode
+    req.params.verificationCode
   );
   if (!user) return res.status(404).send({ message: "User Not found." });
   try {

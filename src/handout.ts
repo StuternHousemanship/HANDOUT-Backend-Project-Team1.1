@@ -7,6 +7,10 @@ import { authRoute } from "./routes/authRoutes";
 import userRouter from "./routes/userProfile";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
+import itemRouter from "./routes/itemRoute";
+import path from "path";
+import cookieParser from 'cookie-parser';
+import imageRouter from "./routes/imageRoute";
 
 dotenv.config();
 const app: Application = express();
@@ -33,19 +37,25 @@ const options = {
 };
 
 const specs = swaggerJsDoc(options);
+const corsOptions = {
+  origin: ["*", "http://localhost:3000", "https://stutern-handout.web.app/"]
+}
 
 database().catch((err) => console.error(err));
-app.use(cors({ origin: "http://localhost:5000" }));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'uploads')));
+app.use(cookieParser());
 
 authRoute(app);
+app.use("/", itemRouter);
 app.use("/", userRouter);
-
+app.use("/", imageRouter);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
 app.get("/", (req: Request, res: Response) => {
-  res.status(200).send("Welcome to Housemanship Handout API!");
+  res.status(200).send("Welcome to Housemanship Handout API!\nGo to /api-docs to get started");
 });
 
 app.get("*", (req: Request, res: Response) => {
