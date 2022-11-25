@@ -36,9 +36,12 @@ const options = {
 };
 
 const specs = swaggerJsDoc(options);
+const corsOptions = {
+  origin: ["*", "http://locahost:3000", "https://stutern-handout.web.app/"]
+}
 
 database().catch((err) => console.error(err));
-app.use(cors({ origin: "*" }));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'uploads')));
