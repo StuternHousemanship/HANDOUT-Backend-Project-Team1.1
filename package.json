@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/server.js",
   "scripts": {
-    "start": "npm run build && node build/app.js",
+    "start": "npm run build && node build/handout.js",
     "lint": "eslint --ext .ts . --fix",
     "build": "npx tsc",
     "start:dev": "nodemon",

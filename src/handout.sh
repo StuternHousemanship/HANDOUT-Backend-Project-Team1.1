@@ -1,1 +1,1 @@
-ts-node -T server.ts
+ts-node -T handout.ts
