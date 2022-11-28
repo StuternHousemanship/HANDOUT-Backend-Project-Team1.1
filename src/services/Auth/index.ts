@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 import { Request, Response } from "express";
 import { generateCode } from "../../services/generateCode";
 import bcrypt from "bcrypt";
-import { AuthRepository } from "../../Repository/Auth";
+import { AuthRepository } from "../../repository/Auth";
 import jwt from "jsonwebtoken";
 import { sendVerificationMail, sendForgotpassword } from "../sendGrid";
 import UserType from "../../interfaces/userType";
@@ -49,7 +49,7 @@ export const createUserService = async (req: Request, res: Response) => {
 
 export const verifyEmailService = async (req: Request, res: Response) => {
   const user = await new AuthRepository().createUserEmail(
-    req.body.verificationCode
+    req.params.verificationCode
   );
   if (!user) return res.status(404).send({ message: "User Not found." });
   try {

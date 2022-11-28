@@ -54,13 +54,9 @@ import {
  *              type: integer
  *              format: int64
  *              example: 10
- *            location:
- *              type: integer
- *              format: int64
- *              example: 10
  */
 
-router.get("/getSingleUser/:id", verifyToken, CurrentUser);
+
 /**
  * @swagger
  * /getSingleUser/{id}:
@@ -69,7 +65,7 @@ router.get("/getSingleUser/:id", verifyToken, CurrentUser);
  *        tags: 
  *          - user
  *        summary: find user by ID
- *        operationID: getUserById
+ *        operationID: getSingleUser
  *        parameters:
  *           - name: userId
  *             in: path
@@ -94,7 +90,9 @@ router.get("/getSingleUser/:id", verifyToken, CurrentUser);
  *           '400':
  *              description: Error
  */
-router.patch("/updateUser", verifyToken, editUser);
+router.get("/getSingleUser/:id", verifyToken, CurrentUser);
+
+
 /**
  * @swagger
  * /updateUser:
@@ -103,7 +101,7 @@ router.patch("/updateUser", verifyToken, editUser);
  *        tags: 
  *          - user
  *        summary: update user password by ID
- *        operationID: getUserById
+ *        operationID: updateUser
  *        parameters:
  *           - name: userId
  *             in: path
@@ -140,8 +138,6 @@ router.patch("/updateUser", verifyToken, editUser);
  *        - lastName
  *        - email
  *        - mobile
- *        - password
- *        - location
  *        properties:
  *            firstName:
  *                    type: string
@@ -155,21 +151,17 @@ router.patch("/updateUser", verifyToken, editUser);
  *            mobile:
  *                    type: string
  *                    example: 99999923
- *            password:
- *                    type: string
- *                    example: test123
- *            location:
- *                    type: string
- *                    example: my city
  */
-router.patch("/updateUserPassword", verifyToken, editUserPassword);
+router.patch("/updateUser", verifyToken, editUser);
+
+
 /**
  * @swagger
  * /updateUserPassword:
  *    patch:
  *        description: This API is for update users password
  *        tags: []
- *        operationID:
+ *        operationID: updateUserPassword
  *        parameters:
  *           - name: userId
  *             in: path
@@ -213,5 +205,6 @@ router.patch("/updateUserPassword", verifyToken, editUserPassword);
  *                    example: test1234
  */
 router.patch("/updateUserPassword", verifyToken, editUserPassword);
+
 
 export default router;

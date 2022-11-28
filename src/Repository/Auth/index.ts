@@ -1,5 +1,6 @@
 import UserType from "../../interfaces/userType";
 import User from "../../models/userModel";
+
 import { tokens } from "../../models/tokenModel";
 
 export class AuthRepository {
@@ -24,12 +25,12 @@ export class AuthRepository {
     return user;
   }
   public async getUser(userId: string): Promise<any> {
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).select('-password');
     if (!user) return null;
     return user;
   }
   public async userEdited(email: string): Promise<any> {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('-password');
     if (!user) return null;
     return user;
   }

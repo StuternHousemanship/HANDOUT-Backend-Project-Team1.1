@@ -123,7 +123,7 @@ export const authRoute = (app: Application) => {
    *                    type: string
    *                    example: abc123
    */
-  app.post("/auth/confirm", verifyUserEmail);
+  app.get("/auth/confirm/:verificationCode", verifyUserEmail);
 
   /**
    * @swagger

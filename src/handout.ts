@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
+
 import * as dotenv from "dotenv";
 import database from "./config/database";
 import { authRoute } from "./routes/authRoutes";
@@ -36,9 +37,12 @@ const options = {
 };
 
 const specs = swaggerJsDoc(options);
+const corsOptions = {
+  origin: ["*", "http://localhost:3000", "https://stutern-handout.web.app/"]
+}
 
 database().catch((err) => console.error(err));
-app.use(cors({ origin: "*" }));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'uploads')));

@@ -1,10 +1,11 @@
 import sgMail from "@sendgrid/mail";
 import * as dotenv from "dotenv";
+import BASE_URL from "../config";
+import { template } from "../config/template/verifyEmail";
 
 dotenv.config();
 
 const SENDGRIDKEY = String(process.env.SENDGRID_KEY);
-
 sgMail.setApiKey(SENDGRIDKEY);
 
 export const sendVerificationMail = async (
@@ -12,12 +13,14 @@ export const sendVerificationMail = async (
   email: string,
   verificationCode: string
 ) => {
+  const verifyEmailUrl = `${BASE_URL}/auth/confirm/${verificationCode}`;
+
   const msg = {
     to: email,
     from: "handout@beargaze.com",
     subject: "Welcome to Handout",
     text: `Verify your account`,
-    html: `<h2>Hello ${name},</h2><p>Welcome to Handout!</p><p>Please verify your account using this code: <strong>${verificationCode}</strong></p>`,
+    html: template(name, verifyEmailUrl),
   };
 
   sgMail

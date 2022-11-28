@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { BadRequestError, UnAuthenticatedError } from "../../errors";
 
-import { AuthRepository } from "../../Repository/Auth";
+import { AuthRepository } from "../../repository/Auth";
 new AuthRepository();
 
 const updateUserPassword = async (req: Request, res: Response) => {

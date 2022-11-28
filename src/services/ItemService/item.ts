@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { BadRequestError, NotFoundError } from "../../errors";
 import { ItemType } from "../../interfaces/itemType";
-import { ItemRepository } from "../../Repository/ItemRepository/item";
+import { ItemRepository } from "../../repository/ItemRepository/item";
 
 new ItemRepository();
 
@@ -48,6 +48,7 @@ export const updateItem = async (req:any, res:Response) => {
   const item = await new ItemRepository().editItem (req.params.id)
 
   if (item) {
+    item.image = image
     item.name = name
     item.price = price
     item.description = description
