@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AuthRepository } from "../../Repository/Auth";
+import { AuthRepository } from "../../repository/Auth";
 new AuthRepository();
 
 const updateUser = async (req: Request, res: Response) => {

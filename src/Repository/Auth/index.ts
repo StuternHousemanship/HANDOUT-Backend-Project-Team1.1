@@ -1,5 +1,6 @@
 import UserType from "../../interfaces/userType";
 import User from "../../models/userModel";
+
 import { tokens } from "../../models/tokenModel";
 
 export class AuthRepository {
