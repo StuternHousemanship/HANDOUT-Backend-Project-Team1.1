@@ -5,7 +5,7 @@ import {
   verifyUserEmail,
   logout,
   forgotPassword,
-} from "../controllers/Auth/authController";
+} from "../Controllers/Auth/authController";
 
 /**
  * @swagger

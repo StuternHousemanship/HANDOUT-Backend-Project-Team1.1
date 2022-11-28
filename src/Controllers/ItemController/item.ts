@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { ItemType } from "../../interfaces/itemType";
+import imageRouter from "../../routes/imageRoute";
 import { createItemService,getItemsService, getPaginatedItems, getItemById, updateItem,deleteItem } from "../../services/ItemService/item";
 
 
 export const createItem = (req: Request, res: Response) => {
   const { user } = req.user;
-
-
+  
     const newItem: ItemType = {
+      image: req.body.image,
       name: req.body.name,
       price: req.body.price,
       location: req.body.location,
@@ -17,6 +18,8 @@ export const createItem = (req: Request, res: Response) => {
       description: req.body.description,
       shippingOptions: req.body.shippingOptions,
       userId: user._id,
+      condition: req.body.condition,
+      itemColor: req.body.itemColor,
     };
 
   createItemService(newItem)
