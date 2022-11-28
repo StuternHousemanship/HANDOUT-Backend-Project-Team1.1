@@ -48,6 +48,7 @@ export const updateItem = async (req:any, res:Response) => {
   const item = await new ItemRepository().editItem (req.params.id)
 
   if (item) {
+    item.image = image
     item.name = name
     item.price = price
     item.description = description

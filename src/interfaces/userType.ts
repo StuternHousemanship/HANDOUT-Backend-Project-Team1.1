@@ -7,7 +7,6 @@ type UserType = {
   password: string;
   active: boolean;
   verificationCode: string;
-  location?: string;
 };
 
 export default UserType;

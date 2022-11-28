@@ -24,8 +24,8 @@ function partialUpdate(persitedUser: any, requestUser: any) {
     if (requestUser.mobile) {
       persitedUser.mobile = requestUser.mobile;
     }
-    if (requestUser.location) {
-      persitedUser.location = requestUser.location;
+    if (requestUser.mobile) {
+      persitedUser.mobile= requestUser.mobile;
     }
   }
 }
