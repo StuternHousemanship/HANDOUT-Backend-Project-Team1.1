@@ -6,6 +6,7 @@ import {
   verifyEmailService,
   logoutService,
   forgotPasswordService,
+  resetpasswordService
 } from "../../services/Auth";
 
 export const create = async (req: Request, res: Response) => {
@@ -35,3 +36,9 @@ export const forgotPassword = async (req: Request, res: Response) => {
   await forgotPasswordService(req, res);
   return res.status(200).json({ message: "Password reset mail has been sent" });
 };
+
+
+export const resetPassword = async (req: Request, res: Response) => {
+  await resetpasswordService(req, res)
+  return res.status(200).json({message: "Password has been updated successfully"})
+}

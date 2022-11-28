@@ -37,7 +37,7 @@ export const sendVerificationMail = async (
 export const sendForgotpassword = async (
   name: string,
   email: string,
-  digitalCode: string
+  link: string
 ) => {
   const info = {
     to: email,
@@ -47,7 +47,7 @@ export const sendForgotpassword = async (
           <h2>Hello ${name}!</h2>
             <p>You requested to reset your password</p>
  
-           <p>Fill in the code: <strong>${digitalCode}</strong></p>
+           <p>Fill in the link: <strong>${link}</strong></p>
             
             <p>This code will expire within 60 minutes.</p>
            

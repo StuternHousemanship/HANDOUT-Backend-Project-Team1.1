@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+// import TokenType from "../interfaces/tokenType";
 
 const tokenSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, required: true, ref: "user" },
