@@ -10,7 +10,6 @@ const userSchema = new Schema<UserType>(
     password: { type: String, required: true },
     active: { type: Boolean, required: true },
     verificationCode: { type: String, select: false },
-    location: { type: String, trim: true, maxlength: 20, default: "my city" },
   },
   { timestamps: true }
 );

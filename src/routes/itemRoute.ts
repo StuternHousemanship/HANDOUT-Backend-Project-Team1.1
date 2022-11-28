@@ -110,9 +110,128 @@ itemRouter.post("/item", verifyToken, uploadImg,checkPermissions, createItem);
  */
 itemRouter.get("/item", verifyToken, getAllItems);
 
+
+/**
+ * @swagger
+ * /item/pageItems:
+ *   get:
+ *     summary: Returns the list of items 
+ *     description: Multiple item values provided with number of pages,total items and item name as keyword and sort Date added  Price Delivery options Location (City, state)
+ *     operationId: pageItems
+ *     tags: [Item]
+ *     parameters:
+ *       - name: tags
+ *         in: query
+ *         description: Tags to filter by
+ *         required: false
+ *         explode: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: The list of the items
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Item'
+ */
 itemRouter.get("/item/pageItems", verifyToken, paginatedLists,PaginatedItems);
+/**
+ * @swagger
+ * /item/oneItem/[id]:
+ *    get:
+ *        description: This API is for getting a single item properties 
+ *        tags: 
+ *          - [item]
+ *        summary: get item by ID
+ *        operationID: oneItem
+ *        parameters:
+ *           - name: itemId
+ *             in: path
+ *             description: ID of the Item
+ *             required: true
+ *             schema:
+ *               type: integer
+ *               format: int64
+ *        responses:
+ *           '200':
+ *              description: Successful
+ *              content:
+ *                application/json:
+ *                   schema:
+ *                     type: object
+ *           '400':
+ *              description: Error
+ */
 itemRouter.get("/item/oneItem/:id", verifyToken, getSingleItem);
+
+/**
+ * @swagger
+ * /item/editItem/[id]:
+ *    put:
+ *        description: This API is for updating an existing item properties with id 
+ *        tags: 
+ *          - [item]
+ *        summary: update an existing item
+ *        operationID: editItem
+ *        parameters:
+ *           - name: itemId
+ *             in: path
+ *             description: ID of the Item
+ *             required: true
+ *             schema:
+ *               type: integer
+ *               format: int64
+ *        responses:
+ *           '200':
+ *              description: item updated Successfully
+ *              content:
+ *                application/json:
+ *                   schema:
+ *                     type: object
+ *           '400':
+ *              description: invalid item ID
+ *           '404':
+ *              description: item not found
+ *           '405':
+ *              description: Invalid token
+ */
 itemRouter.put("/item/editItem/:id", verifyToken, checkPermissions, updatedItem);
+
+/**
+ * @swagger
+ * /item/deleteItem/[id]:
+ *    delete:
+ *        description: This API is for deleting an existing item properties with id 
+ *        tags: 
+ *          - [item]
+ *        summary: delete an existing item
+ *        operationID: deleteItem
+ *        parameters:
+ *           - name: itemId
+ *             in: path
+ *             description: ID of the Item
+ *             required: true
+ *             schema:
+ *               type: integer
+ *               format: int64
+ *        responses:
+ *           '200':
+ *              description: item deleted Successfully
+ *              content:
+ *                application/json:
+ *                   schema:
+ *                     type: object
+ *           '400':
+ *              description: invalid item ID
+ *           '404':
+ *              description: item not found
+ *           '405':
+ *              description: Invalid token
+ */
 itemRouter.delete("/item/deleteItem/:id", verifyToken,checkPermissions, deletedItem);
 
 export default itemRouter;
+
