@@ -39,7 +39,6 @@ export class AuthRepository {
     const user = await User.findById(userId).select("+password");
     return user;
   }
-
   public async forgotpassword(email: string): Promise<any> {
     const user = await User.findOne({ email });
     if (!user) return null;
@@ -55,4 +54,8 @@ export class AuthRepository {
     if (!userOne) return null;
     return userOne;
   }
+
 }
+
+
+

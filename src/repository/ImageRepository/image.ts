@@ -6,10 +6,10 @@ export class ImageRepository {
     const newImage = new Image(image);
     await newImage
       .save()
-      .then((result) => {
+      .then((result: object) => {
         return result;
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         return error;
       });
   }

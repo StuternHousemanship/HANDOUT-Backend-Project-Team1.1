@@ -1,5 +1,5 @@
 type TokenType = {
-  userId: number;
+  userId?: string;
   token: string;
 };
 export default TokenType;
