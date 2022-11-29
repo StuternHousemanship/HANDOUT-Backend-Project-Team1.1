@@ -6,7 +6,7 @@ import {
   logout,
   forgotPassword,
   resetPassword
-} from "../Controllers/Auth/authController";
+} from "../controllers/Auth/authController";
 
 /**
  * @swagger

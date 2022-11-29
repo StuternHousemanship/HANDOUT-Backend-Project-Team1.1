@@ -1,6 +1,6 @@
 import express from "express";
 
-import { createItem, getAllItems, PaginatedItems,getSingleItem,updatedItem, deletedItem } from "../Controllers/ItemController/item";
+import { createItem, getAllItems, PaginatedItems,getSingleItem,updatedItem, deletedItem } from "../controllers/ItemController/item";
 import checkPermissions from "../middleware/checkPermission"
 const itemRouter = express.Router();
 import {paginatedLists} from "../middleware/paginated"
