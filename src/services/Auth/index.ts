@@ -70,7 +70,11 @@ export const loginService = async (req: Request, res: Response) => {
   if (!hashedPassword) {
     return res.status(400).json({ error: "Invalid credentials" });
   }
-
+  if (!user.active) {
+    return res.status(401).send({
+        message: "Pending Account. Please Verify Your Email!",
+    });
+  }
   try {
     const token = jwt.sign({ user }, TOKEN_SECRET, {
       expiresIn: "2h",
