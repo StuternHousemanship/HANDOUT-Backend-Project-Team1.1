@@ -186,7 +186,7 @@ export const mail = (name: string, url: string) => {
                                   </td>
                                    </tr>
                                    <tr>
-                       <td class="m_h3 " align="left" valign="bottom" style="padding:10px 0 20px 0;font-family:open sans;font-size:18px;word-break:break-all;line-height:26px;color: #1976D2;cursor:pointer;"> https://www.imdb.com/name/nmo358479/awards
+                       <td class="m_h3 " align="left" valign="bottom" style="padding:10px 0 20px 0;font-family:open sans;font-size:18px;word-break:break-all;line-height:26px;color: #1976D2;cursor:pointer;"> ${url}
    
                        </td>
                      </tr>

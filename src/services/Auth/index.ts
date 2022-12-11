@@ -101,7 +101,6 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
       }).save();
     }
    
-    
     await sendForgotpassword("User", req.body.email, code);
   } catch (err) {
     return err;
