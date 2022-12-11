@@ -209,6 +209,54 @@ export const authRoute = (app: Application) => {
    *              description: Error
    */
   app.get("/auth/logout", logout);
+     /**
+   * @swagger
+   * /auth/resetpassword/:userId/:token:
+   *    post:
+   *        description: This API is for users to change their password
+   *        tags: [Auth]
+   *        opreationID:
+   *        parameters:
+   *        - in: path
+   *          name: userId
+   *          schema:
+   *            type: string
+   *            required: true
+   *            description: The User id of the user
+   * 
+   *        - in: path
+   *          name: token
+   *          schema:
+   *            type: string
+   *            required: true
+   *            description: token sent to the user
+   * 
+   *
+   *        consumes:
+   *        - application/json
+   *        produces:
+   *        - application/json
+   *        requestBody:
+   *          content:
+   *            application/json:
+   *              schema:
+   *                $ref: '#/definitions/passwordCredentials'
+   *        responses:
+   *           201:
+   *              description: "Password updated successfully"
+   *           400:
+   *              description: Error
+   * definitions:
+   *     passwordCredentials:
+   *        type: object
+   *        required:
+   *        - password
+   *        properties:
+   *            password:
+   *                    type: string
+   *                    example: abababa
+   */
+
   app.post("/auth/resetpassword/:userId/:token", resetPassword)
 };
 

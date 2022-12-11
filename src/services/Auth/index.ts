@@ -101,8 +101,8 @@ export const forgotPasswordService = async (req: Request, res: Response) => {
       }).save();
     }
    
-    const link =  `${process.env.BASE_URL}/passwordReset?token=${user._id}/${token.token}`
-    await sendForgotpassword("User", req.body.email, link);
+    
+    await sendForgotpassword("User", req.body.email, code);
   } catch (err) {
     return err;
   }

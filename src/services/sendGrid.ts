@@ -2,6 +2,7 @@ import sgMail from "@sendgrid/mail";
 import * as dotenv from "dotenv";
 import BASE_URL from "../config";
 import { template } from "../config/template/verifyEmail";
+import {mail} from "../config/template/verifyPassword"
 
 dotenv.config();
 
@@ -35,28 +36,21 @@ export const sendVerificationMail = async (
 };
 
 export const sendForgotpassword = async (
+
+ 
   name: string,
   email: string,
-  link: string
+  digitalCode: string
+
+
 ) => {
+
+  const verifyPasswordUrl = `${BASE_URL}passwordReset?token=${digitalCode}`
   const info = {
     to: email,
     from: "handout@beargaze.com",
     subject: "Password Reset Email",
-    html: `
-          <h2>Hello ${name}!</h2>
-            <p>You requested to reset your password</p>
- 
-           <p>Fill in the link: <strong>${link}</strong></p>
-            
-            <p>This code will expire within 60 minutes.</p>
-           
-            <p>If you don't want to reset your credentials, just ignore this message and nothing will be changed.
-            
-            </p>
-           
-
-          </div>`,
+    html: mail( name, verifyPasswordUrl)
   };
 
   try {
